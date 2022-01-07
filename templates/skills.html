@@ -1,0 +1,175 @@
+  {% extends "base.html" %}
+  {% load static %}
+  
+      <title>{% block title %}Resume{% endblock %}</title>
+      <style>
+        /* Make sure that padding behaves as expected */
+       * { box-sizing: border-box }
+           
+           /* Container for skill bars */
+           .container {
+               width: 100%; /* Full width */
+         
+           }
+         
+           .skills {
+               text-align: right; /* Right-align text */
+               padding-top: 10px; /* Add top padding */
+               padding-bottom: 10px; /* Add bottom padding */
+               color: white; /* White text color */
+           }
+              
+           .skill {width: 80%; background-color: #2196F3;} 
+     </style>
+      
+      {% block content%}
+  <section id="resume" class="py-5 section section-blank">
+    <div class="container text-light my-3 py-5">
+      <h2 class="text-center my-3 py-5">Resume</h2>
+      <div class="row">
+        <div class="col-auto">
+          <a download href="{{ me.profile.resume.url }}" class="btn btn-primary">Download Resume</a>
+        </div>
+        <div class="col-auto">
+          <a href="/contact" class="btn btn-outline-warning">Contact</a>
+        </div>
+      </div>
+      <div class="container text-light bg-secondary pb-5">
+        <li style="list-style-type: none;">
+          <h3 class="section-tagline my-3 pt-5" style="text-align:left;">
+            <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+                
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                  <ul class="navbar-nav mr-auto">
+                    <li class="nav-item ">
+                      <a class="nav-link" href="/education"> Education </a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link " href="/courses"> Course Highlights </a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" href="/resumeprojects"> Projects </a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link btn-outline-secondary active" href="/skills"> Skills </a>
+                    </li>
+                    <li class="nav-item ">
+                      <a class="nav-link" href="/leadership"> Campus Involvement or Leardership </a>
+                    </li>
+                  </ul>
+                </div>
+              </nav>
+          </h3>
+        
+          <h3 class="section-tagline my-3 py-3" style="text-align:left;">
+            <i class="fa fa-cogs">
+                Skills
+            </i>
+        </h3>
+
+        <li class="my-3 " style="list-style-type: none;">
+          <div class="container my-3 pt-3">
+    
+            <h5 class="text-center">Hard Skills</h5>
+            <div class="row">
+              <div class="col-sm py-5">
+                <ul>
+                  <b class="text-dark">Coding</b>
+                  {% for skill in skills %}
+                  {% if skill.is_hard_skill  and skill.is_active and skill.category == "Coding"%}
+                  <p>
+                    <li>{{ skill.name }}</li>
+                  </p>
+                  {% endif %}
+                  {% endfor %}
+                </ul>
+              </div>
+
+              <!--<div class="col-sm py-5">
+                <ul>
+                  <b>Machine Learning/Data Analysis/Data Visualization</b>
+                  <li>Scikit-Learn</li>
+                  <li>Pandas</li>
+                  <li>Numpy</li>
+                  <li>Matplotlib</li>
+                  <li>NTLK</li>
+                </ul>
+              </div>-->
+
+              <div class="col-sm py-5">
+                <ul>
+                  <b class="text-dark">Web Development</b>
+                  {% for skill in skills %}
+                  {% if skill.is_hard_skill  and skill.is_active and skill.category == "Web development" %}
+                  <p>
+                    <li>{{ skill.name }}</li>
+                  </p>
+                  {% endif %}
+                  {% endfor %}
+                </ul>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-sm py-5">
+                <ul>
+                  <b class="text-dark">Database</b>
+                  {% for skill in skills %}
+                  {% if skill.is_hard_skill  and skill.is_active and skill.category == "Database" %}
+                  <p>
+                    <li>{{ skill.name }}</li>
+                  </p>
+                  {% endif %}
+                  {% endfor %}
+                </ul>
+              </div>
+
+              <div class="col-sm py-5">
+                <ul>
+                  <b class="text-dark">Tools</b>
+                  {% for skill in skills %}
+                  {% if skill.is_active and skill.category == "Tools" %}
+                  <p>
+                    <li>{{ skill.name }}</li>
+                  </p>
+                  {% endif %}
+                  {% endfor %}
+                </ul>
+              </div>
+            </div>
+            
+            <h5 class="text-center">Soft Skills</h5>
+            <div class="row ">
+              <div class="col-sm my-3 py-3">
+                <ul>
+                  {% for skill in skills %}
+                  {% if skill.is_soft_skill and skill.is_active %}
+                  <p>
+                    <li>{{ skill.name }}</li>
+                  </p>
+                  {% endif %}
+                 {% endfor %}
+                </ul>
+              </div>
+            </div>
+           
+            <h5 class="text-center">Other Skills</h5>
+            <div class="row ">
+              <div class="col-sm my-3 pt-3">
+                <ul>
+                  {% for skill in skills %}
+                  {% if skill.is_active and skill.category == "Others" %}
+                  <p>
+                    <li>{{ skill.name }}</li>
+                  </p>
+                  {% endif %}
+                {% endfor %}
+                </ul> 
+              </div>
+            </div>
+          </div> 
+        </li>
+      </div>
+    </div>
+  </section>
+  {% endblock %}

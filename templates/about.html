@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% load static %}
+
+  <title>{% block title %}About{% endblock %}</title>
+  {% block content%}
+
+  <div class="container my-3 pb-5">
+    <h2 class="text-center text-light my-3 pb-5 pt-5">About Myself</h2>
+    <div class="row py-5">
+      <div class="card">
+        <div class="card-body text-dark">
+          <h5 class="card-title text-center py-3">A brief introduction of myself</h5>
+          <p class="card-text">
+            {{ me.profile.biography }}
+          </p>
+        </div>
+      </div>
+    </div>
+    <div class="row py-5">
+      <div class="col-sm text-center text-light">
+        <a>I am also on :
+          <li style="list-style-type: none;font-size: 30px">
+            <b>
+              <a href="https://www.linkedin.com/in/stevewasiswa/">
+                <i class="fa fa-linkedin text-warning"> LinkedIn</i>
+              </a>
+            </b>
+          </li>
+          <li style="list-style-type: none;font-size: 30px">
+            <a href="https://github.com/snwasiswa">
+              <i class="fa fa-github text-warning "> GitHub</i>
+            </a>
+          </li>
+  
+          <li style="list-style-type: none;font-size: 30px">
+            <a href="https://theamazingnature.tumblr.com">
+              <i class="fa fa-tumblr text-warning"> Tumblr</i>
+            </a>
+          </li>
+        </a>
+      </div>
+    </div>
+  </div>
+  {% endblock %}
