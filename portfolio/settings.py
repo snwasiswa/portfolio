@@ -75,6 +75,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'portfolio.wsgi.application'
 
+SECURE_SSL_REDIRECT = True
 
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
