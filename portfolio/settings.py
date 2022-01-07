@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 
 import os
+import django_on_heroku
 from pathlib import Path
 
 
@@ -25,7 +26,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'portfolio-digital.herokuapp.com']
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'portfolio-digital.herokuapp.com', 'stevewasiswa.com', 'www.stevewasiswa.com']
 
 
 # Application definition
@@ -146,5 +147,5 @@ STATICFILES_DIRS = [
 
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
-import django_on_heroku
+
 django_on_heroku.settings(locals())
