@@ -26,7 +26,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'portfolio-digital.herokuapp.com', 'stevewasiswa.com', 'www.stevewasiswa.com']
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'portfolio-digital.herokuapp.com',
+                 'stevewasiswa.com', 'www.stevewasiswa.com']
 
 
 # Application definition
@@ -59,8 +60,7 @@ ROOT_URLCONF = 'portfolio.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / 'templates']
-        ,
+        'DIRS': [BASE_DIR / 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -134,15 +134,15 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 # Change later
-STATIC_ROOT = os.path.join(BASE_DIR , "staticfiles")
+STATIC_ROOT = os.path.join(BASE_DIR, "static")
 
 MEDIA_URL = "/media/"
 # Change later
-MEDIA_ROOT = os.path.join(BASE_DIR , "mediafiles")
+MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 
 STATICFILES_DIRS = [
    os.path.join(BASE_DIR, 'static'),
-   os.path.join(BASE_DIR, 'media')
+   # os.path.join(BASE_DIR, 'media')
 ]
 
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
