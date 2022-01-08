@@ -13,22 +13,23 @@
 
     <!--Required for Font Awesome Icons-->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    
 
-    <link rel="canonical" href="{{request.path}}"/>
-    <link rel="home" href="{% url 'home' %}"/>
+
+    <link rel="canonical" href="{{request.path}}" />
+    <link rel="home" href="{% url 'home' %}" />
 
     <meta name="description" content="{% block description %}{% endblock %}">
     <meta name="keywords" content="{% block keywords %}{% endblock %}">
     <!--Incorporated CSS-->
-    <link rel="stylesheet" href="{% static 'css/styles.css' %}" type = "text/css">
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}" type="text/css">
     {% block extend_header %}{% endblock %}
     <title>Home</title>
 </head>
 
-<body style="background-image: url({% static 'images/bg_image.jpg' %}); background-size: cover;background-attachment: fixed;">
-<!--<body style="background-color:black">-->
-    <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: black"  >
+<body
+    style="background-image: url({% static 'images/bg_image.jpg' %}); background-size: cover;background-attachment: fixed;">
+    <!--<body style="background-color:black">-->
+    <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: black">
         <a class="navbar-brand text-light " style="text-shadow: 4px 4px 5px gray;" href="/">STEVE WASISWA</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -68,7 +69,7 @@
 
     <!---->
     {% include 'partials/messages.html' %}
-    
+
     <div class="">
         {% block content %}
         {% endblock %}
@@ -88,4 +89,5 @@
         integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
         crossorigin="anonymous"></script>
 </body>
+
 </html>

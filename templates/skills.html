@@ -88,7 +88,7 @@
                   <strong class="text-secondary py-5">Coding</strong>
                   {% for skill in skills %}
                   {% if skill.is_hard_skill and skill.is_active and skill.category == "Coding"%}
-                      {% include 'partials/rating.html' %}
+                  {% include 'partials/rating.html' %}
                   {% endif %}
                   {% endfor %}
                 </ul>
