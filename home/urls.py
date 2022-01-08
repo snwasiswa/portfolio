@@ -9,7 +9,7 @@ admin.site.index_title = "Welcome to the Portal"
 
 urlpatterns = [
     path('', views.home, name='home'),
-    path('home', views.home, name='home'),
+    path('home/', views.home, name='home'),
     path('portfolio/', views.PortfolioView.as_view(), name='portfolio'),
     path('portfolio/<slug:slug>', views.PortfolioDetailView.as_view(), name='portfolio_details'),
     path('about', views.about, name='about'),
