@@ -18,7 +18,7 @@
             <div class="container text-light bg-secondary pb-5" >
                 <li style="list-style-type: none;">
                     <h3 class="section-tagline my-3 pt-5" style="text-align:left;">
-                        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+                        <div class="navbar navbar-expand-lg navbar-dark" style="background-color: black">
 
                             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                                 <ul class="navbar-nav mr-auto">
@@ -41,22 +41,21 @@
                                     </li>
                                 </ul>
                             </div>
-                        </nav>
+                        </div>
                     </h3>
-
+                </li>
                     <h3 class="section-tagline my-3 py-3" style="text-align:left;">
-                        <i class="fa fa-university">
+                        <em class="fa fa-university">
                             Membership, leadership, hobbies, etc
-                        </i>
+                        </em>
                     </h3>
-
-                <li style="list-style-type: none;">
-                    <p>
+                <div class="bg-dark">
+                <ul class="py-4">
                         {% for position in leaderships %}
                         <li>{{ position.name }}</li>
                         {% endfor %}
-                    </p>
-                </li>
+                </ul>
+                </div>
             </div>
         </div>
     </section>

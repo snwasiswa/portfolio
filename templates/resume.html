@@ -17,9 +17,8 @@
       </div>
 
       <div class="container text-light bg-secondary pb-5" >
-        <li style="list-style-type: none;">
           <h3 class="section-tagline my-3 pt-5" style="text-align:center;">
-            <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <div class="navbar navbar-expand-lg navbar-dark" style="background-color: black">
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                   <ul class="navbar-nav mr-auto">
                     <li class="nav-item ml-4 mr-3">
@@ -39,24 +38,28 @@
                     </li>
                   </ul>
                 </div>
-              </nav>
+              </div>
           </h3>
 
           <h3 class="section-tagline my-3 py-3" style="text-align:left;">
-            <i class="fa fa-graduation-cap">
+            <em class="fa fa-graduation-cap">
               Education
-            </i>
+            </em>
           </h3>
+      <div class="bg-dark">
           {% for education in educations %}
           <br>{{ education.school }}
           <span class="right">
-            <i class="float-right">{{ education.year }}</i>
+            <em class="float-right">{{ education.year }}</em>
           </span>
-          </br>
-          <b class="text-dark">{{ education.degree }}</b>
-          <br>Focus Area : {{ education.focus_area }}</br>
+          <br>
+          <strong class="text-secondary">{{ education.degree }}</strong>
+          <br>Focus Area : {{ education.focus_area }}
+              <br>
           {% endfor %}
-        </li>
+      </div>
+
+
         
       </div>
     </div>

@@ -16,7 +16,7 @@
             <div class="container text-light bg-secondary pb-5" >
                 <li style="list-style-type: none;">
                     <h3 class="section-tagline my-3 pt-5" style="text-align:left;">
-                        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+                        <div class="navbar navbar-expand-lg navbar-dark" style="background-color: black">
                             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                                 <ul class="navbar-nav mr-auto">
                                     <li class="nav-item ml-4 mr-3">
@@ -36,22 +36,22 @@
                                     </li>
                                 </ul>
                             </div>
-                        </nav>
+                        </div>
                     </h3>
+                </li>
                     <h3 class="section-tagline my-3 py-3" style="text-align:left;">
-                        <i class="fa fa-tasks">
+                        <em class="fa fa-tasks">
                             Projects
-                        </i>
+                        </em>
                     </h3>
-                <li style="list-style-type: none;">
-                    <h5>Course projects</h5>
-                    <p>
+                    <h5 class="text-center">Course projects</h5>
+                    <div class="bg-dark">
                     {% for project in projects %}
                     {% if project.is_side_project == False and project.is_active %}
                        <li style="list-style-type: none;">
-                            <b class="text-dark">{{ project.name }}</b>
+                            <strong class="text-secondary">{{ project.name }}</strong>
                             <span class="right">
-                                <i class="float-right">{{ project.year }}</i>
+                                <em class="float-right">{{ project.year }}</em>
                             </span>
                             <p class=pt-3>
                                {{ project.description }}
@@ -59,15 +59,15 @@
                         </li>
                     {% endif %}
                     {% endfor %}
-                    </p>
-                    <h5>Side projects</h5>
-                    <p>
+                    </div>
+                    <h5 class="text-center">Side projects</h5>
+                    <div class="bg-dark">
                     {% for project in projects %}
                     {% if project.is_active and project.is_side_project %}
                         <li style="list-style-type: none;">
-                            <b class="text-dark">{{ project.name }}</b>
+                            <strong class="text-secondary">{{ project.name }}</strong>
                             <span class="right">
-                               <i class="float-right">{{ project.year }}</i>
+                               <em class="float-right">{{ project.year }}</em>
                             </span>
                             <p>
                                {{ project.description }}
@@ -75,9 +75,8 @@
                         </li>
                     {% endif %}
                     {% endfor %}
-                    </p>
-                </li>
-                </li>
+                    </div>
+        </li>
             </div>
         </div>
     </section>
