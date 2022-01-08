@@ -1,0 +1,41 @@
+{% if skill.rating == 5 %}
+<ul class="py-3">{{ skill.name }}
+  <span class="fa fa-star ml-5" style="color:darkorange"></span>
+  <span class="fa fa-star" style="color:darkorange"></span>
+  <span class="fa fa-star" style="color:darkorange"></span>
+  <span class="fa fa-star" style="color:darkorange"></span>
+  <span class="fa fa-star" style="color:darkorange"></span>
+</ul>
+{% elif skill.rating == 4 %}
+<ul class="py-3">{{ skill.name }}
+  <span class="fa fa-star ml-5" style="color:darkorange"></span>
+  <span class="fa fa-star" style="color:darkorange"></span>
+  <span class="fa fa-star" style="color:darkorange"></span>
+  <span class="fa fa-star" style="color:darkorange"></span>
+  <span class="fa fa-star"></span>
+</ul>
+{% elif skill.rating == 3 %}
+<ul class="py-3">{{ skill.name }}
+  <span class="fa fa-star ml-5" style="color:darkorange"></span>
+  <span class="fa fa-star" style="color:darkorange"></span>
+  <span class="fa fa-star" style="color:darkorange"></span>
+  <span class="fa fa-star"></span>
+  <span class="fa fa-star"></span>
+</ul>
+{% elif skill.rating == 2 %}
+<ul class="py-3">{{ skill.name }}
+  <span class="fa fa-star ml-5" style="color:darkorange"></span>
+  <span class="fa fa-star" style="color:darkorange"></span>
+  <span class="fa fa-star"></span>
+  <span class="fa fa-star"></span>
+  <span class="fa fa-star"></span>
+</ul>
+{% else %}
+<ul class="py-3">{{ skill.name }}
+  <span class="fa fa-star ml-5" style="color:darkorange"></span>
+  <span class="fa fa-star"></span>
+  <span class="fa fa-star"></span>
+  <span class="fa fa-star"></span>
+  <span class="fa fa-star"></span>
+</ul>
+{% endif %}
