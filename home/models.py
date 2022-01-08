@@ -28,7 +28,7 @@ class Skill(models.Model):
     """Model for skills"""
     name = models.CharField(max_length=25, blank=True, null=True)
     image = models.FileField(upload_to="skills", null=True, blank=True)
-    rating = models.IntegerField(default=80, null=True, blank=True)
+    rating = models.IntegerField(default=4, null=True, blank=True)
     is_key_skill = models.BooleanField(default=False)
     is_hard_skill = models.BooleanField(default=False)
     is_soft_skill = models.BooleanField(default=False)
