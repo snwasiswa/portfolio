@@ -27,7 +27,7 @@ class Education(models.Model):
 class Skill(models.Model):
     """Model for skills"""
     name = models.CharField(max_length=25, blank=True, null=True)
-    image = models.FileField(upload_to="skills", null=True, blank=True)
+    image = models.FileField(upload_to="logos", null=True, blank=True)
     rating = models.IntegerField(default=4, null=True, blank=True)
     is_key_skill = models.BooleanField(default=False)
     is_hard_skill = models.BooleanField(default=False)
@@ -41,6 +41,13 @@ class Skill(models.Model):
 
     def __str__(self):
         return self.name
+
+    @property
+    def get_logo_url(self):
+        if self.image and hasattr(self.image, 'url'):
+            return self.image.url
+        else:
+            return "/media/logos/thumb.png"
 
 
 class Course(models.Model):
@@ -102,6 +109,13 @@ class Portfolio(models.Model):
     def get_absolute_url(self):
         return f"/portfolio/{self.slug}"
 
+    @property
+    def get_logo_url(self):
+        if self.image and hasattr(self.image, 'url'):
+            return self.image.url
+        else:
+            return "/media/logos/thumb.png"
+
 
 class Profile(models.Model):
     """Model for the user profile"""
@@ -122,6 +136,13 @@ class Profile(models.Model):
 
     def __str__(self):
         return f'{self.user.first_name} {self.user.last_name}'
+
+    @property
+    def get_avatar_url(self):
+        if self.avatar and hasattr(self.avatar, 'url'):
+            return self.avatar.url
+        else:
+            return "/media/avatars/default_avatar.png"
 
 
 class Contact(models.Model):
@@ -156,6 +177,13 @@ class Feedback(models.Model):
     def __str__(self):
         return self.name
 
+    @property
+    def get_thumbnail_url(self):
+        if self.thumbnail and hasattr(self.thumbnail, 'url'):
+            return self.thumbnail .url
+        else:
+            return "/media/logos/thumb.png"
+
 
 class Image(models.Model):
     """Model for image files"""
@@ -176,3 +204,10 @@ class Image(models.Model):
 
     def __str__(self):
         return self.name
+
+    @property
+    def get_image_url(self):
+        if self.image and hasattr(self.image, 'url'):
+            return self.image.url
+        else:
+            return "/media/logos/thumb.png"
