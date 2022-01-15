@@ -47,7 +47,7 @@ class Skill(models.Model):
         if self.image and hasattr(self.image, 'url'):
             return self.image.url
         else:
-            return "/media/logos/default-default-thumb_dn1xzg.png"
+            return "/media/logos/default-thumb_dn1xzg.png"
 
 
 class Course(models.Model):
@@ -114,7 +114,7 @@ class Portfolio(models.Model):
         if self.image and hasattr(self.image, 'url'):
             return self.image.url
         else:
-            return "/media/logos/default-default-thumb_dn1xzg.png"
+            return "/media/logos/default-thumb_dn1xzg.png"
 
 
 class Profile(models.Model):
@@ -182,7 +182,7 @@ class Feedback(models.Model):
         if self.thumbnail and hasattr(self.thumbnail, 'url'):
             return self.thumbnail .url
         else:
-            return "/media/logos/default-default-thumb_dn1xzg.png"
+            return "/media/logos/default-thumb_dn1xzg.png"
 
 
 class Image(models.Model):
@@ -210,5 +210,5 @@ class Image(models.Model):
         if self.image and hasattr(self.image, 'url'):
             return self.image.url
         else:
-            return "/media/logos/default-default-thumb_dn1xzg.png"
+            return "/media/logos/default-thumb_dn1xzg.png"
 
