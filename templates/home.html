@@ -58,7 +58,7 @@
 <div class="container my-3 pt-5 pb-3">
 
     <div class="row-fluid text-center">
-        <img class="bd-placeholder-img rounded-circle" width="250" height="280" src="{% static 'avatars/steve.jpeg' %}"
+        <img class="bd-placeholder-img rounded-circle" width="250" height="280" src="{{ me.profile.get_avatar_url }}"
             preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: 140x140"
             alt="...">
         <title>Placeholder</title>

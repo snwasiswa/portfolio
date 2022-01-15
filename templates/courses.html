@@ -42,18 +42,18 @@
                     </div>
                 </h3>
             </li>
-
             <h3 class="section-tagline my-3 pb-3 pt-3" style="text-align:left;">
                 <em class="fa fa-certificate">
                     Course Highlights
                 </em>
             </h3>
-            <div class="bg-dark">
-                <ul class="py-4">
-                    {% for course in courses %}
-                    <li>{{ course.name }}</li>
-                    {% endfor %}
-                </ul>
+            <div class="bg-dark mx-3">
+                {% for course in courses %}
+                <div class="pt-2">
+                    <ul>{{ course.name }}</ul>
+                </div>
+                <div class="bg-secondary pt-2"></div>
+                {% endfor %}
             </div>
         </div>
     </div>

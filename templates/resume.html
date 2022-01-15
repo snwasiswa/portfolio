@@ -40,27 +40,26 @@
           </div>
         </div>
       </h3>
-
       <h3 class="section-tagline my-3 py-3" style="text-align:left;">
         <em class="fa fa-graduation-cap">
           Education
         </em>
       </h3>
-      <div class="bg-dark">
+      <div class="bg-dark mx-3">
         {% for education in educations %}
-        <br>{{ education.school }}
-        <span class="right">
-          <em class="float-right">{{ education.year }}</em>
-        </span>
-        <br>
-        <strong class="text-secondary">{{ education.degree }}</strong>
-        <br>Focus Area : {{ education.focus_area }}
-        <br>
+        <div class="mx-3">
+          <br>{{ education.school }}
+          <span class="right">
+            <em class="float-right">{{ education.year }}</em>
+          </span>
+          <br>
+          <strong class="text-secondary">{{ education.degree }}</strong>
+          <br>Focus Area : {{ education.focus_area }}
+          <br>
+        </div>
+        <div class="bg-secondary pt-3"></div>
         {% endfor %}
       </div>
-
-
-
     </div>
   </div>
 </section>

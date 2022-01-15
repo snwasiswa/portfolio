@@ -46,34 +46,40 @@
                 </em>
             </h3>
             <h5 class="text-center">Course projects</h5>
-            <div class="bg-dark">
+            <div class="bg-dark mx-3">
                 {% for project in projects %}
                 {% if project.is_side_project == False and project.is_active %}
-                <li style="list-style-type: none;">
-                    <strong class="text-secondary">{{ project.name }}</strong>
-                    <span class="right">
-                        <em class="float-right">{{ project.year }}</em>
-                    </span>
-                    <p class=pt-3>
-                        {{ project.description }}
-                    </p>
-                </li>
+                <div class="mx-3">
+                    <li style="list-style-type: none;">
+                        <strong class="text-secondary">{{ project.name }}</strong>
+                        <span class="right">
+                            <em class="float-right">{{ project.year }}</em>
+                        </span>
+                        <p>
+                            {{ project.description }}
+                        </p>
+                    </li>
+                </div>
+                <div class="bg-secondary pt-3"></div>
                 {% endif %}
                 {% endfor %}
             </div>
             <h5 class="text-center">Side projects</h5>
-            <div class="bg-dark">
+            <div class="bg-dark mx-3">
                 {% for project in projects %}
                 {% if project.is_active and project.is_side_project %}
-                <li style="list-style-type: none;">
-                    <strong class="text-secondary">{{ project.name }}</strong>
-                    <span class="right">
-                        <em class="float-right">{{ project.year }}</em>
-                    </span>
-                    <p>
-                        {{ project.description }}
-                    </p>
-                </li>
+                <div class="mx-3">
+                    <li style="list-style-type: none;">
+                        <strong class="text-secondary">{{ project.name }}</strong>
+                        <span class="right">
+                            <em class="float-right">{{ project.year }}</em>
+                        </span>
+                        <p>
+                            {{ project.description }}
+                        </p>
+                    </li>
+                </div>
+                <div class="bg-secondary pt-3"></div>
                 {% endif %}
                 {% endfor %}
             </div>

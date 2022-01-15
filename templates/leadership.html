@@ -49,12 +49,13 @@
                     Membership, leadership, hobbies, etc
                 </em>
             </h3>
-            <div class="bg-dark">
-                <ul class="py-4">
-                    {% for position in leaderships %}
-                    <li>{{ position.name }}</li>
-                    {% endfor %}
-                </ul>
+            <div class="bg-dark mx-3">
+                {% for position in leaderships %}
+                <div class="pt-2">
+                    <ul>{{ position.name }}</ul>
+                </div>
+                <div class="bg-secondary pt-2"></div>
+                {% endfor %}
             </div>
         </div>
     </div>
