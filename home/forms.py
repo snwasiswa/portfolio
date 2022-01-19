@@ -43,7 +43,6 @@ class ContactForm(forms.ModelForm):
     def send_email(self):
 
         message, subject = self.get_message()
-        print(str(local_settings.ADMIN_EMAIL))
 
         try:
             send_mail(subject, message, from_email=str(settings.ADMIN_EMAIL),
