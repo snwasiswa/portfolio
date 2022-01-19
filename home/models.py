@@ -80,6 +80,31 @@ class Leadership(models.Model):
         return self.name
 
 
+class MyContacts(models.Model):
+    """Model to represent links to external sources"""
+    name = models.CharField(blank=True, null=True, max_length=250)
+    data = models.CharField(blank=True, null=True, max_length=250)
+    icon = models.ImageField(blank=True, null=True, upload_to="images")
+    category = models.CharField(blank=True, null=True, max_length=250)
+    is_active = models.BooleanField(default=True)
+    url = models.URLField(blank=True, null=True)
+
+    class Meta:
+        verbose_name = 'MyContact'
+        verbose_name_plural = 'MyContacts'
+        ordering = ["name"]
+
+    def __str__(self):
+        return self.name
+
+    @property
+    def get_icon_url(self):
+        if self.icon and hasattr(self.icon, 'url'):
+            return self.icon.url
+        else:
+            return "https://res.cloudinary.com/dh13i9dce/image/upload/v1642216413/media/logos/default-thumb_dn1xzg.png"
+
+
 class Portfolio(models.Model):
     """Model for user portfolio"""
     name = models.CharField(blank=True, null=True, max_length=250)
@@ -129,6 +154,7 @@ class Profile(models.Model):
     leaderships = models.ManyToManyField(Leadership, blank=True)
     educations = models.ManyToManyField(Education, blank=True)
     projects = models.ManyToManyField(Portfolio, blank=True)
+    links = models.ManyToManyField(MyContacts, blank=True)
 
     class Meta:
         verbose_name = 'Profile'
@@ -150,8 +176,9 @@ class Contact(models.Model):
     name = models.CharField(verbose_name="Name", max_length=250)
     email = models.CharField(verbose_name="Email", max_length=250)
     message = models.TextField(verbose_name="Message", max_length=2000)
-    phone = models.CharField(verbose_name="Phone number", max_length=10)
+    phone = models.CharField(verbose_name="Phone number", max_length=10, default='0000000000')
     timestamp = models.DateTimeField(auto_now_add=True)
+    subject = models.CharField(verbose_name="Subject", max_length=250, default='No subject')
 
     class Meta:
         verbose_name = 'Contact'
@@ -211,4 +238,8 @@ class Image(models.Model):
             return self.image.url
         else:
             return "https://res.cloudinary.com/dh13i9dce/image/upload/v1642216413/media/logos/default-thumb_dn1xzg.png"
+
+
+
+
 
