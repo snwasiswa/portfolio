@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.template.defaultfilters import slugify
 from ckeditor.fields import RichTextField
+from phonenumber_field.modelfields import PhoneNumberField
 
 
 # Create your models here.
@@ -176,7 +177,7 @@ class Contact(models.Model):
     name = models.CharField(verbose_name="Name", max_length=250)
     email = models.CharField(verbose_name="Email", max_length=250)
     message = models.TextField(verbose_name="Message", max_length=2000)
-    phone = models.CharField(verbose_name="Phone number", max_length=10, default='0000000000')
+    phone = PhoneNumberField(verbose_name="Phone number")
     timestamp = models.DateTimeField(auto_now_add=True)
     subject = models.CharField(verbose_name="Subject", max_length=250, default='No subject')
 

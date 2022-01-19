@@ -4,6 +4,8 @@ from .models import Contact
 from django.core.mail import send_mail, BadHeaderError
 from django.shortcuts import HttpResponse
 from django.conf import settings
+from phonenumber_field.formfields import PhoneNumberField
+from phonenumber_field.widgets import PhoneNumberPrefixWidget
 
 
 class ContactForm(forms.ModelForm):
@@ -13,8 +15,11 @@ class ContactForm(forms.ModelForm):
         attrs={'placeholder': 'Full name', 'class': 'form-control'}))
     email = forms.EmailField(max_length=200, required=True, widget=forms.TextInput(
         attrs={'placeholder': 'Email', 'class': 'form-control'}))
-    phone = forms.CharField(max_length=120, widget=forms.TextInput(
-        attrs={'placeholder': 'Phone number', 'class': 'form-control'}))
+    phone = PhoneNumberField(widget=PhoneNumberPrefixWidget(initial='US',
+                                                            attrs={'placeholder': 'Phone number', 'class': 'form'
+                                                                                                           '-control'}),
+                             required=True)
+
     subject = forms.CharField(max_length=120, widget=forms.TextInput(
         attrs={'placeholder': 'Subject', 'class': 'form-control'}))
     message = forms.CharField(max_length=1000, required=True, widget=forms.Textarea(
