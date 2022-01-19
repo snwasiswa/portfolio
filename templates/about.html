@@ -19,24 +19,20 @@
   <div class="row py-5">
     <div class="col-sm text-center text-light">
       <a>I am also on :
-        <li style="list-style-type: none;font-size: 30px">
-          <b>
-            <a href="https://www.linkedin.com/in/stevewasiswa/">
-              <i class="fa fa-linkedin text-warning"> LinkedIn</i>
-            </a>
-          </b>
-        </li>
-        <li style="list-style-type: none;font-size: 30px">
-          <a href="https://github.com/snwasiswa">
-            <i class="fa fa-github text-warning "> GitHub</i>
-          </a>
-        </li>
-
-        <li style="list-style-type: none;font-size: 30px">
-          <a href="https://theamazingnature.tumblr.com">
-            <i class="fa fa-tumblr text-warning"> Tumblr</i>
-          </a>
-        </li>
+        {% for link in contacts %}
+        {% if link.category == 'Link' %}
+        <ul style="list-style-type: none;font-size: 30px">
+          <div>
+            <strong>
+              <a href="{{ link.url }}">
+                <em class="fa fa-{{ link.name|lower }} " style="color: steelblue">
+                  {{ link.name }}</em>
+              </a>
+            </strong>
+          </div>
+        </ul>
+        {% endif %}
+        {% endfor %}
       </a>
     </div>
   </div>
