@@ -1,7 +1,6 @@
 from django import forms
 from django.db.models import fields
 from .models import Contact
-from portfolio import local_settings
 from django.core.mail import send_mail, BadHeaderError
 from django.shortcuts import HttpResponse
 from django.conf import settings
