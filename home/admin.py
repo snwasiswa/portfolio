@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Leadership, Profile, Contact, Feedback, Image, Education, Skill, Portfolio, Course
+from .models import Leadership, Profile, Contact, Feedback, Image, Education, Skill, Portfolio, Course, MyContacts
 
 
 # Register your models here.
@@ -36,6 +36,11 @@ class CourseAdmin(admin.ModelAdmin):
 @admin.register(Skill)
 class SkillAdmin(admin.ModelAdmin):
     list_display = ('id', 'name', 'rating')
+
+
+@admin.register(MyContacts)
+class MyContactsAdmin(admin.ModelAdmin):
+    list_display = ('id', 'name', 'category')
 
 
 @admin.register(Portfolio)
