@@ -71,7 +71,7 @@ class Leadership(models.Model):
     name = models.CharField(blank=True, null=True, max_length=500)
     is_active = models.BooleanField(default=True)
     date = models.DateTimeField(blank=True, null=True)
-    description = models.CharField(blank=True, null=True, max_length=250)
+    description = RichTextField(blank=True, null=True)
 
     class Meta:
         verbose_name = 'Leadership'
@@ -109,11 +109,10 @@ class MyContacts(models.Model):
 class Portfolio(models.Model):
     """Model for user portfolio"""
     name = models.CharField(blank=True, null=True, max_length=250)
-    description = models.CharField(blank=True, null=True, max_length=1000)
     image = models.ImageField(blank=True, null=True, upload_to="portfolios")
     is_active = models.BooleanField(default=True)
     slug = models.SlugField(null=True, blank=True)
-    body = RichTextField(blank=True, null=True)
+    description = RichTextField(blank=True, null=True)
     date = models.DateTimeField(blank=True, null=True)
     is_side_project = models.BooleanField(null=True, blank=True)
     url = models.URLField(null=True, blank=True)
@@ -147,7 +146,7 @@ class Profile(models.Model):
     """Model for the user profile"""
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     title = models.CharField(max_length=250, blank=True, null=True)
-    biography = models.TextField(blank=True, null=True)
+    biography = RichTextField(blank=True, null=True)
     skills = models.ManyToManyField(Skill, blank=True)
     avatar = models.ImageField(blank=True, null=True, upload_to="avatars")
     resume = models.FileField(blank=True, null=True, upload_to="resumes")
