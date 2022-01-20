@@ -50,15 +50,17 @@
                 {% for project in projects %}
                 {% if project.is_side_project == False and project.is_active %}
                 <div class="mx-3">
-                    <li style="list-style-type: none;">
-                        <strong class="text-secondary">{{ project.name }}</strong>
-                        <span class="right">
-                            <em class="float-right">{{ project.year }}</em>
-                        </span>
-                        <p>
-                            {{ project.description }}
-                        </p>
-                    </li>
+                    <ul style="list-style-type: none;">
+                        <div class="pb-1 pt-3 mr-5">
+                            <strong class="text-secondary ">{{ project.name }}</strong>
+                            <span class="right">
+                                <em class="float-right">{{ project.year }}</em>
+                            </span>
+                            <p>
+                                {{ project.description|safe }}
+                            </p>
+                        </div>
+                    </ul>
                 </div>
                 <div class="bg-secondary pt-3"></div>
                 {% endif %}
@@ -69,26 +71,17 @@
                 {% for project in projects %}
                 {% if project.is_active and project.is_side_project %}
                 <div class="mx-3">
-                    <div>
-                        <ul style="list-style-type: none;">
-                            <div>
-                                <strong class="text-secondary">{{ project.name }}
-                                </strong>
-                            </div>
-                            <div>
-                                <p>
-                                    <span class="right">
-                                        <em class="float-right">{{ project.year }}</em>
-                                    </span>
-                                </p>
-                            </div>
-                            <div>
-                                <p>
-                                    {{ project.description|safe }}
-                                </p>
-                            </div>
-                        </ul>
-                    </div>
+                    <ul style="list-style-type: none;">
+                        <div class="pb-1 pt-3 mr-5">
+                            <strong class="text-secondary ">{{ project.name }}</strong>
+                            <span class="right">
+                                <em class="float-right">{{ project.year }}</em>
+                            </span>
+                            <p>
+                                {{ project.description|safe }}
+                            </p>
+                        </div>
+                    </ul>
                 </div>
                 <div class="bg-secondary pt-3"></div>
                 {% endif %}
