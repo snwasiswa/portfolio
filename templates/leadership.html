@@ -52,7 +52,17 @@
             <div class="bg-dark mx-3">
                 {% for position in leaderships %}
                 <div class="pt-2">
-                    <ul>{{ position.name }}</ul>
+                    <ul>
+                        <div>
+                            <strong class="text-secondary">
+                                {{ position.name }}
+                            </strong>
+                        </div>
+                        <div>
+                            <p>{{ position.description|safe }}</p>
+
+                        </div>
+                    </ul>
                 </div>
                 <div class="bg-secondary pt-2"></div>
                 {% endfor %}
