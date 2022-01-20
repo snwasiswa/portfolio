@@ -11,18 +11,18 @@ from phonenumber_field.widgets import PhoneNumberPrefixWidget
 class ContactForm(forms.ModelForm):
     """Form for the contact"""
 
-    name = forms.CharField(max_length=120, required=True, widget=forms.TextInput(
+    name = forms.CharField(label="Name", max_length=250, required=True, widget=forms.TextInput(
         attrs={'placeholder': 'Full name', 'class': 'form-control'}))
-    email = forms.EmailField(max_length=200, required=True, widget=forms.TextInput(
+    email = forms.EmailField(label="Email", max_length=250, required=True, widget=forms.TextInput(
         attrs={'placeholder': 'Email', 'class': 'form-control'}))
-    phone = PhoneNumberField(widget=PhoneNumberPrefixWidget(initial='US',
+    phone = PhoneNumberField(label="Phone number", widget=PhoneNumberPrefixWidget(initial='US',
                                                             attrs={'placeholder': 'Phone number', 'class': 'form'
                                                                                                            '-control'}),
-                             required=True)
+                             required=False)
 
-    subject = forms.CharField(max_length=120, widget=forms.TextInput(
+    subject = forms.CharField(label="Subject", max_length=250, required=False, widget=forms.TextInput(
         attrs={'placeholder': 'Subject', 'class': 'form-control'}))
-    message = forms.CharField(max_length=1000, required=True, widget=forms.Textarea(
+    message = forms.CharField(label="Message", max_length=2000, required=True, widget=forms.Textarea(
         attrs={'placeholder': 'Your message', 'rows': 7, 'class': 'form-control'}))
 
     def get_message(self):

@@ -176,9 +176,9 @@ class Contact(models.Model):
     name = models.CharField(verbose_name="Name", max_length=250)
     email = models.CharField(verbose_name="Email", max_length=250)
     message = models.TextField(verbose_name="Message", max_length=2000)
-    phone = PhoneNumberField(verbose_name="Phone number")
+    phone = PhoneNumberField(verbose_name="Phone number", blank=True, null=True)
     timestamp = models.DateTimeField(auto_now_add=True)
-    subject = models.CharField(verbose_name="Subject", max_length=250, default='No subject')
+    subject = models.CharField(verbose_name="Subject", max_length=250, blank=True, null=True)
 
     class Meta:
         verbose_name = 'Contact'
