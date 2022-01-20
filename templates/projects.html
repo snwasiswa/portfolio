@@ -14,7 +14,7 @@
       <div class="card" style="width: 18rem;">
         <div class="card-body text-dark">
           <h5 class="card-title text-center">{{ project.name }}</h5>
-          <p class="card-text">{{ project.description }}</p>
+          <p class="card-text">{{ project.description|safe }}</p>
 
           <a href="{{ project.url }}" class="btn btn-primary">Click for demo</a>
         </div>
