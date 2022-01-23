@@ -14,19 +14,19 @@
         <div class="card-body text-left text-dark">
           <h5 class="card-title text-center">{{ project.name }}</h5>
           <p class="card-text">{{ project.description|safe }}</p>
-            <div class="text-center py-2">
-                <a href="{{ project.url }}" class="btn btn-primary">Click for demo</a>
-            </div>
+          <div class="text-center py-2">
+            <a href="{{ project.url }}" class="btn btn-primary">Click for demo or source code</a>
+          </div>
         </div>
       </div>
     </div>
-        {% if forloop.counter|divisibleby:3 %}
-    </div>
-    <div class="row my-3 pb-5">
-        {% endif %}
-        {% endfor %}
-    </div>
-{% include "partials/pagination.html" %}
+    {% if forloop.counter|divisibleby:3 %}
+  </div>
+  <div class="row my-3 pb-5">
+    {% endif %}
+    {% endfor %}
+  </div>
+  {% include "partials/pagination.html" %}
 </div>
 
 {% endblock %}
