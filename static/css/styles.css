@@ -12,10 +12,14 @@ body{
     text-shadow: 4px 4px 5px gray;
 }
 
-.footer{
-    position:fixed;
-    bottom:0;
-    left:0;        
+footer{
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    background-color: black;
+    color: white;
+    text-align: center;
 }
 
 p.container{

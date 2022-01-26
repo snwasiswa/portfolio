@@ -21,7 +21,17 @@
     <meta name="description" content="{% block description %}{% endblock %}">
     <meta name="keywords" content="{% block keywords %}{% endblock %}">
     <!--Incorporated CSS-->
-    <link rel="stylesheet" href="{% static 'css/styles.css' %}" type="text/css">
+    <link rel="stylesheet" href="{% static "css/styles.css" %}" type="text/css">
+    <style>
+        footer{
+            position: fixed;
+            left: 0;
+            bottom: 0;
+            width: 100%;
+            background-color: black;
+            text-align: center;
+        }
+    </style>
     {% block extend_header %}{% endblock %}
     <title>Home</title>
 </head>
@@ -69,12 +79,10 @@
 
     <!---->
     {% include 'partials/messages.html' %}
-
     <div class="">
         {% block content %}
         {% endblock %}
     </div>
-
     {% include 'partials/footer.html' %}
 
     <!-- Optional JavaScript -->
