@@ -118,6 +118,7 @@ class Portfolio(models.Model):
     is_side_project = models.BooleanField(null=True, blank=True)
     url = models.URLField(null=True, blank=True)
     year = models.CharField(blank=True, null=True, max_length=70)
+    technology = models.CharField(blank=True, null=True, max_length=1000)
 
     def save(self, *args, **kwargs):
         if not self.id:
