@@ -14,7 +14,7 @@
         <img src="{{ project.get_logo_url }}" class="card-img-top" alt="...">
         <div class="card-body text-left text-dark">
           <h5 class="card-title text-center">{{ project.name }}</h5>
-          <p class="card-text">{{ project.description|safe|truncatechars:70 }}</p>
+          <p class="card-text">{{ project.description|safe|truncatechars:100 }}</p>
             <div class="py-2">
                 <p>
                     Technology: <strong class="ml-2 text-primary">{{ project.technology }}</strong>
