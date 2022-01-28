@@ -11,9 +11,10 @@
     {% for project in projects %}
     <div class="col text-center py-3">
       <div class="card" style="width: 18rem;">
+        <img src="{{ project.get_logo_url }}" class="card-img-top" alt="...">
         <div class="card-body text-left text-dark">
           <h5 class="card-title text-center">{{ project.name }}</h5>
-          <p class="card-text">{{ project.description|safe|truncatewords_html:140 }}</p>
+          <p class="card-text">{{ project.description|safe|truncatewords_html:70 }}</p>
           <div class="text-center py-2">
             <a href="{{ project.url }}" class="btn btn-primary">Click for demo or source code</a>
           </div>
