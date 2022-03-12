@@ -166,11 +166,19 @@ class Profile(models.Model):
         return f'{self.user.first_name} {self.user.last_name}'
 
     @property
+    def get_resume_url(self):
+        if self.resume and hasattr(self.resume, 'url'):
+            return self.resume.url
+        else:
+            return "https://res.cloudinary.com/dh13i9dce/image/upload/v1642473417/media/resumes/resume_copy_ijhcvq.pdf"
+
+    @property
     def get_avatar_url(self):
         if self.avatar and hasattr(self.avatar, 'url'):
             return self.avatar.url
         else:
-            return "https://res.cloudinary.com/dh13i9dce/image/upload/v1642216377/media/avatars/defaultprofile_vad1ub.png"
+            return "https://res.cloudinary.com/dh13i9dce/image/upload/v1642216377/media/avatars/defaultprofile_vad1ub" \
+                   ".png "
 
 
 class Contact(models.Model):
