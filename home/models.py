@@ -1,4 +1,3 @@
-from cloudinary.models import CloudinaryField
 from django.db import models
 from django.contrib.auth.models import User
 from django.template.defaultfilters import slugify
@@ -152,7 +151,7 @@ class Profile(models.Model):
     biography = RichTextField(blank=True, null=True)
     skills = models.ManyToManyField(Skill, blank=True)
     avatar = models.ImageField(blank=True, null=True, upload_to="avatars")
-    resume = CloudinaryField(resource_type="auto", blank=True, null=True)
+    resume = models.FileField(blank=True, null=True, upload_to="resumes")
     courses = models.ManyToManyField(Course, blank=True)
     leaderships = models.ManyToManyField(Leadership, blank=True)
     educations = models.ManyToManyField(Education, blank=True)
@@ -171,7 +170,8 @@ class Profile(models.Model):
         if self.resume and hasattr(self.resume, 'url'):
             return self.resume.url
         else:
-            return "https://res.cloudinary.com/dh13i9dce/image/upload/v1642473417/media/resumes/resume_copy_ijhcvq.pdf"
+            return "https://res.cloudinary.com/dh13i9dce/image/upload/v1647104168/media/resumes/updated_resume_rhk4au" \
+                   ".pdf "
 
     @property
     def get_avatar_url(self):
