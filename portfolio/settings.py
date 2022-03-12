@@ -15,6 +15,8 @@ import django_on_heroku
 import cloudinary
 import cloudinary_storage
 from pathlib import Path
+from django.contrib import messages
+from django.contrib.messages import constants as message_constants
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -34,6 +36,7 @@ INSTALLED_APPS = [
     'home',
     'ckeditor',
     'crispy_forms',
+    'django_bootstrap5',
     'phonenumber_field',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -120,6 +123,13 @@ USE_I18N = True
 
 USE_TZ = True
 
+MESSAGE_TAGS = {
+    messages.DEBUG: 'alert-info',
+    messages.INFO: 'alert-info',
+    messages.SUCCESS: 'alert-success',
+    messages.WARNING: 'alert-warning',
+    messages.ERROR: 'alert-danger',
+}
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.0/howto/static-files/

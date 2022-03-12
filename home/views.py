@@ -3,6 +3,7 @@ from django.views import generic
 from home.forms import ContactForm
 from .models import Leadership, Portfolio, Skill, Education, Course, MyContacts
 from django.contrib import messages
+from django.contrib.messages.views import SuccessMessageMixin
 
 
 # Create your views here.
@@ -101,10 +102,10 @@ class PortfolioDetailView(generic.DetailView):
     template_name = "portfolio_details.html"
 
 
-class ContactView(generic.FormView):
+class ContactView(generic.FormView, SuccessMessageMixin):
     template_name = "contact.html"
     form_class = ContactForm
-    success_url = '/'
+    success_url = 'contact'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
