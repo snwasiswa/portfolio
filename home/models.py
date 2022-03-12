@@ -1,3 +1,4 @@
+from cloudinary.models import CloudinaryField
 from django.db import models
 from django.contrib.auth.models import User
 from django.template.defaultfilters import slugify
@@ -151,7 +152,7 @@ class Profile(models.Model):
     biography = RichTextField(blank=True, null=True)
     skills = models.ManyToManyField(Skill, blank=True)
     avatar = models.ImageField(blank=True, null=True, upload_to="avatars")
-    resume = models.ImageField(blank=True, null=True, upload_to="resumes")
+    resume = CloudinaryField(resource_type="auto", blank=True, null=True)
     courses = models.ManyToManyField(Course, blank=True)
     leaderships = models.ManyToManyField(Leadership, blank=True)
     educations = models.ManyToManyField(Education, blank=True)
