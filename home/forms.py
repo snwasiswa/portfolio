@@ -6,6 +6,7 @@ from django.shortcuts import HttpResponse
 from django.conf import settings
 from phonenumber_field.formfields import PhoneNumberField
 from phonenumber_field.widgets import PhoneNumberPrefixWidget
+from captcha.fields import CaptchaField
 
 
 class ContactForm(forms.ModelForm):
@@ -16,14 +17,17 @@ class ContactForm(forms.ModelForm):
     email = forms.EmailField(label="Email", max_length=250, required=True, widget=forms.TextInput(
         attrs={'placeholder': 'Email', 'class': 'form-control'}))
     phone = PhoneNumberField(label="Phone number", widget=PhoneNumberPrefixWidget(initial='US',
-                                                            attrs={'placeholder': 'Phone number', 'class': 'form'
-                                                                                                           '-control'}),
+                                                                                  attrs={'placeholder': 'Phone number',
+                                                                                         'class': 'form'
+                                                                                                  '-control'}),
                              required=False)
 
     subject = forms.CharField(label="Subject", max_length=250, required=False, widget=forms.TextInput(
         attrs={'placeholder': 'Subject', 'class': 'form-control'}))
     message = forms.CharField(label="Message", max_length=2000, required=True, widget=forms.Textarea(
         attrs={'placeholder': 'Your message', 'rows': 7, 'class': 'form-control'}))
+
+    captcha = CaptchaField(required=True)
 
     def get_message(self):
 

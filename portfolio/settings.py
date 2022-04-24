@@ -36,6 +36,7 @@ INSTALLED_APPS = [
     'home',
     'ckeditor',
     'crispy_forms',
+    'captcha',
     'django_bootstrap5',
     'phonenumber_field',
     'django.contrib.admin',
