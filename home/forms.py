@@ -6,7 +6,9 @@ from django.shortcuts import HttpResponse
 from django.conf import settings
 from phonenumber_field.formfields import PhoneNumberField
 from phonenumber_field.widgets import PhoneNumberPrefixWidget
-from captcha.fields import CaptchaField
+# from captcha.fields import CaptchaField
+from captcha.fields import ReCaptchaField
+from captcha.widgets import ReCaptchaV2Checkbox
 
 
 class ContactForm(forms.ModelForm):
@@ -27,7 +29,7 @@ class ContactForm(forms.ModelForm):
     message = forms.CharField(label="Message", max_length=2000, required=True, widget=forms.Textarea(
         attrs={'placeholder': 'Your message', 'rows': 7, 'class': 'form-control'}))
 
-    captcha = CaptchaField(required=True)
+    captcha = ReCaptchaField(required=True, widget=ReCaptchaV2Checkbox)
 
     def get_message(self):
 
