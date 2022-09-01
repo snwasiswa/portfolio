@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 from django.template.defaultfilters import slugify
 from ckeditor.fields import RichTextField
 from phonenumber_field.modelfields import PhoneNumberField
+from cloudinary_storage.storage import RawMediaCloudinaryStorage
 
 
 # Create your models here.
@@ -151,7 +152,7 @@ class Profile(models.Model):
     biography = RichTextField(blank=True, null=True)
     skills = models.ManyToManyField(Skill, blank=True)
     avatar = models.ImageField(blank=True, null=True, upload_to="avatars")
-    resume = models.FileField(blank=True, null=True, upload_to="resumes")
+    resume = models.FileField(blank=True, null=True, upload_to="resumes", storage=RawMediaCloudinaryStorage())
     courses = models.ManyToManyField(Course, blank=True)
     leaderships = models.ManyToManyField(Leadership, blank=True)
     educations = models.ManyToManyField(Education, blank=True)

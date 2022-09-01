@@ -39,12 +39,14 @@ INSTALLED_APPS = [
     'captcha',
     'django_bootstrap5',
     'phonenumber_field',
+    'cloudinary_storage',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'cloudinary',
 ]
 
 MIDDLEWARE = [
@@ -80,7 +82,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'portfolio.wsgi.application'
 
-SECURE_SSL_REDIRECT = True
+SECURE_SSL_REDIRECT = False
 
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
