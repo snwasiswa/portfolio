@@ -171,7 +171,7 @@ class Profile(models.Model):
         if self.resume and hasattr(self.resume, 'url'):
             return self.resume.url
         else:
-            return "https://res.cloudinary.com/dh13i9dce/image/upload/v1657858420/media/resumes/resume_h4jwio.pdf"
+            return "https://res.cloudinary.com/dh13i9dce/image/upload/v1657859552/media/resumes/online_resume_kn1apo.pdf"
 
     @property
     def get_avatar_url(self):
