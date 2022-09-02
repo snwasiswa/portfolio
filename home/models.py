@@ -152,7 +152,7 @@ class Profile(models.Model):
     biography = RichTextField(blank=True, null=True)
     skills = models.ManyToManyField(Skill, blank=True)
     avatar = models.ImageField(blank=True, null=True, upload_to="avatars")
-    resume = models.FileField(blank=True, null=True, upload_to="resumes", storage=RawMediaCloudinaryStorage())
+    resume = models.FileField(blank=True, null=True, upload_to="resumes")
     courses = models.ManyToManyField(Course, blank=True)
     leaderships = models.ManyToManyField(Leadership, blank=True)
     educations = models.ManyToManyField(Education, blank=True)
