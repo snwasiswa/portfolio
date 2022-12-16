@@ -3,7 +3,6 @@ from django.contrib.auth.models import User
 from django.template.defaultfilters import slugify
 from ckeditor.fields import RichTextField
 from phonenumber_field.modelfields import PhoneNumberField
-from cloudinary_storage.storage import RawMediaCloudinaryStorage
 
 
 # Create your models here.
@@ -153,6 +152,7 @@ class Profile(models.Model):
     skills = models.ManyToManyField(Skill, blank=True)
     avatar = models.ImageField(blank=True, null=True, upload_to="avatars")
     resume = models.FileField(blank=True, null=True, upload_to="resumes")
+    work = models.FileField(blank=True, null=True, upload_to="work_samples")
     courses = models.ManyToManyField(Course, blank=True)
     leaderships = models.ManyToManyField(Leadership, blank=True)
     educations = models.ManyToManyField(Education, blank=True)
@@ -170,6 +170,13 @@ class Profile(models.Model):
     def get_resume_url(self):
         if self.resume and hasattr(self.resume, 'url'):
             return self.resume.url
+        else:
+            return "https://res.cloudinary.com/dh13i9dce/image/upload/v1657859552/media/resumes/online_resume_kn1apo.pdf"
+
+    @property
+    def get_work_samples_url(self):
+        if self.work and hasattr(self.work, 'url'):
+            return self.work.url
         else:
             return "https://res.cloudinary.com/dh13i9dce/image/upload/v1657859552/media/resumes/online_resume_kn1apo.pdf"
 
