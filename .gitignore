@@ -1,0 +1,6 @@
+.env
+.gitignore
+.git
+db.sqlite3
+cloud_sql_proxy
+/env/
