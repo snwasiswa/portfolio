@@ -34,9 +34,6 @@ SECRET_KEY = env("SECRET_KEY")
 # Change this to "False" when you are ready for production
 DEBUG = env("DEBUG")
 
-# Get specific domain url of the app
-DOMAIN_URL = env("DOMAIN_URL")
-
 SECURE_SSL_REDIRECT = True
 
 ALLOWED_HOSTS = ["*"]
