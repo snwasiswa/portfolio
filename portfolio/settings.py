@@ -230,4 +230,5 @@ ADMIN_EMAIL = env("ADMIN_EMAIL")
 ADMIN_NAME = env("ADMIN_NAME")
 
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
