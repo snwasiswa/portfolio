@@ -9,14 +9,10 @@ https://docs.djangoproject.com/en/4.0/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.0/ref/settings/
 """
-import io
 import os
 import environ
 from pathlib import Path
 from django.contrib import messages
-import cloudinary
-import cloudinary_storage
-from urllib.parse import urlparse
 from django.contrib.messages import constants as message_constants
 import dj_database_url
 
@@ -138,19 +134,29 @@ MESSAGE_TAGS = {
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
-STATIC_URL = '/static/'
+AWS_ACCESS_KEY_ID = env('FILEBASE-ACCESS-KEY')
+AWS_SECRET_ACCESS_KEY = env('FILEBASE-SECRET-KEY')
+AWS_STORAGE_BUCKET_NAME = env('FILEBASE-BUCKET-NAME')
+AWS_S3_ENDPOINT_URL = env('ENDPOINT_URL')
+AWS_S3_CUSTOM_DOMAIN = '%s.s3.filebase.com' % AWS_STORAGE_BUCKET_NAME
 
-# Change later
 STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
-
-MEDIA_URL = "/media/"
-
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
+
+STATIC_LOCATION = '/static/'
+MEDIA_LOCATION = '/media/'
+
+STATIC_URL = 'https://%s/%s/' % (AWS_S3_CUSTOM_DOMAIN, STATIC_LOCATION)
+MEDIA_URL = 'https://%s/%s/' % (AWS_S3_CUSTOM_DOMAIN, MEDIA_LOCATION)
 
 STATICFILES_DIRS = [
    os.path.join(BASE_DIR, 'static'),
    # os.path.join(BASE_DIR, 'media')
 ]
+
+STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+
+DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
@@ -228,7 +234,3 @@ RECAPTCHA_PRIVATE_KEY = str(env("RECAPTCHA_PRIVATE_KEY"))
 # Administrator configurations
 ADMIN_EMAIL = env("ADMIN_EMAIL")
 ADMIN_NAME = env("ADMIN_NAME")
-
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
-DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
-
