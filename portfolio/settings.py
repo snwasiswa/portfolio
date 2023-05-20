@@ -134,29 +134,23 @@ MESSAGE_TAGS = {
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
-AWS_ACCESS_KEY_ID = env('FILEBASE_ACCESS_KEY')
-AWS_SECRET_ACCESS_KEY = env('FILEBASE_SECRET_KEY')
-AWS_STORAGE_BUCKET_NAME = env('FILEBASE_BUCKET_NAME')
-AWS_S3_ENDPOINT_URL = env('ENDPOINT_URL')
-AWS_S3_CUSTOM_DOMAIN = '%s.s3.filebase.com' % AWS_STORAGE_BUCKET_NAME
-
 STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 
-STATIC_LOCATION = '/static/'
-MEDIA_LOCATION = '/media/'
-
-STATIC_URL = 'https://%s/%s/' % (AWS_S3_CUSTOM_DOMAIN, STATIC_LOCATION)
-MEDIA_URL = 'https://%s/%s/' % (AWS_S3_CUSTOM_DOMAIN, MEDIA_LOCATION)
+STATIC_URL = '/static/'
+MEDIA_URL = '/media/'
 
 STATICFILES_DIRS = [
    os.path.join(BASE_DIR, 'static'),
    # os.path.join(BASE_DIR, 'media')
 ]
 
-STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+DROPBOX_OAUTH2_TOKEN = env('OAUTH_TOKEN')
 
-DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+DROPBOX_ROOT_PATH = '/portfolio-website/'
+
+STATICFILES_STORAGE = 'storages.backends.dropbox.DropBoxStorage'
+DEFAULT_FILE_STORAGE = 'storages.backends.dropbox.DropBoxStorage'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
