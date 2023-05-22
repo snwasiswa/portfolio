@@ -135,7 +135,7 @@ MESSAGE_TAGS = {
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
 STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
-MEDIA_ROOT = os.path.join(BASE_DIR, "media")
+MEDIA_ROOT = os.path.realpath(os.path.join(BASE_DIR, '../media'))
 
 STATIC_URL = '/static/'
 MEDIA_URL = '/media/'
