@@ -135,7 +135,7 @@ MESSAGE_TAGS = {
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
 STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
-MEDIA_ROOT = os.path.realpath(os.path.join(BASE_DIR, '../media'))
+MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 
 STATIC_URL = '/static/'
 MEDIA_URL = '/media/'
@@ -149,7 +149,7 @@ DROPBOX_APP_KEY = env("APP_KEY")
 DROPBOX_APP_SECRET = env("APP_SECRET")
 DROPBOX_OAUTH2_REFRESH_TOKEN = env('REFRESH_OAUTH_TOKEN')
 
-DROPBOX_ROOT_PATH = '/portfolio-website/'
+DROPBOX_ROOT_PATH = '/media/'
 
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 DEFAULT_FILE_STORAGE = 'storages.backends.dropbox.DropBoxStorage'
