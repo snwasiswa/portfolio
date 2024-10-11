@@ -5,33 +5,11 @@
 <title>{% block title %}Contact{% endblock %}</title>
 {% block content%}
 <div class="container text-light pb-5">
-
   <h2 class="text-center my-3 pb-5 pt-5">Contact</h2>
-
   <div class="container my-3 pb-5 pt-5">
     <div class="row ">
       <div class="col-sm my-3 pb-3 pt-3">
-        <p> The easiest way to contact me is through my email or this form. </p>
-        <ul class="list-contacts my-3 pb-3 pt-4">
-          {% for contact in contacts %}
-          {% if contact.name == 'Phone Number' %}
-          <li style="list-style-type: none;">
-            <em class="text-light"><img src="{{ contact.get_icon_url }} " class="rounded-circle mx-3" alt="image logo"
-                style="width: 25px; height: 25px;">
-            </em>
-            <a>{{ contact.data }}</a>
-          </li>
-          {% endif %}
-          {% if contact.name == 'Email' %}
-          <li style="list-style-type: none;">
-            <em class="text-light"><img src="{{ contact.get_icon_url }} " class="rounded-circle mx-3" alt="image logo"
-                style="width: 25px; height: 25px;">
-            </em>
-            <a class="text-warning" href="mailto:{{ contact.data }}">{{ contact.data }} </a>
-          </li>
-          {% endif %}
-          {% endfor %}
-        </ul>
+        <h5 class="text-center"> The simplest way to get in touch with me is by filling out this form. </h5>
       </div>
       <div class="col-sm my-3 pb-5 pt-5 bg-warning text-dark">
         <form action="/contact" method="post">

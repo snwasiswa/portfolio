@@ -11,6 +11,8 @@ class Education(models.Model):
     """Model for user certificate"""
     degree = models.CharField(blank=True, null=True, max_length=250)
     school = models.CharField(blank=True, null=True, max_length=250)
+    major = models.CharField(blank=True, null=True, max_length=250)
+    minor = models.CharField(blank=True, null=True, max_length=250)
     focus_area = models.CharField(blank=True, null=True, max_length=250)
     is_active = models.BooleanField(default=True)
     date = models.DateTimeField(blank=True, null=True)

@@ -45,8 +45,12 @@
           </span>
           <br>
           <strong class="text-secondary">{{ education.degree }}</strong>
-          <br>Focus Area : {{ education.focus_area }}
+          <br>Major : {{ education.major }}
           <br>
+          <i>Focus Area : {{ education.focus_area }}</i>
+          {% if education.minor %}
+          <br>Minor : {{ education.minor }}
+          {% endif %}
         </div>
         <div class="bg-secondary pt-3"></div>
         {% endfor %}

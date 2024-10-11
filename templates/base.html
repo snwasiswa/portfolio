@@ -6,18 +6,13 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
         integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
-
     <!--Required for Font Awesome Icons-->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-
-
     <link rel="canonical" href="{{request.path}}" />
     <link rel="home" href="{% url 'home' %}" />
-
     <meta name="description" content="{% block description %}{% endblock %}">
     <meta name="keywords" content="{% block keywords %}{% endblock %}">
     <!--Incorporated CSS-->
@@ -31,11 +26,11 @@
             background-color: black;
             text-align: center;
         }
+
     </style>
     {% block extend_header %}{% endblock %}
     <title>Home</title>
 </head>
-
 <body
     style="background-image: url({% static 'images/bg_image.jpg' %}); background-size: cover;background-attachment: fixed;">
     <!--<body style="background-color:black">-->
@@ -69,14 +64,12 @@
             </form>
         </div>
     </nav>
-
     <!--<div class="alert alert-primary text-center alert-dismissible fade show mb-0" role="alert">
         <strong>Hello Visitor!</strong> I am looking for a summer 2021 software engineering internship.
         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
     </div>-->
-
     <!---->
     {% include 'partials/messages.html' %}
     <div class="">
@@ -84,7 +77,6 @@
         {% endblock %}
     </div>
     {% include 'partials/footer.html' %}
-
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
@@ -97,5 +89,4 @@
         integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
         crossorigin="anonymous"></script>
 </body>
-
 </html>

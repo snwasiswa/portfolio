@@ -20,7 +20,7 @@ class ImageAdmin(admin.ModelAdmin):
 
 @admin.register(Education)
 class EducationAdmin(admin.ModelAdmin):
-    list_display = ('id', 'degree', 'school')
+    list_display = ('id', 'degree', 'school', 'major')
 
 
 @admin.register(Leadership)
