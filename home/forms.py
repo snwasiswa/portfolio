@@ -29,7 +29,7 @@ class ContactForm(forms.ModelForm):
     message = forms.CharField(label="Message", max_length=2000, required=True, widget=forms.Textarea(
         attrs={'placeholder': 'Your message', 'rows': 7, 'class': 'form-control'}))
 
-    #captcha = ReCaptchaField(required=True, widget=ReCaptchaV2Checkbox)
+    captcha = ReCaptchaField(required=True, widget=ReCaptchaV2Checkbox)
 
     def get_message(self):
 
