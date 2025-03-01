@@ -52,7 +52,7 @@ six==1.17.0
 soupsieve==2.6
 sqlparse==0.5.3
 starkbank-ecdsa==2.2.0
-stone==3.3.8
+stone==3
 typing_extensions==4.12.2
 upgrade-requirements==1.7.0
 urllib3==2.3.0
