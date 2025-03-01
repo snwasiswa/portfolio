@@ -6,9 +6,8 @@ from django.shortcuts import HttpResponse
 from django.conf import settings
 from phonenumber_field.formfields import PhoneNumberField
 from phonenumber_field.widgets import PhoneNumberPrefixWidget
-# from captcha.fields import CaptchaField
-from captcha.fields import ReCaptchaField
-from captcha.widgets import ReCaptchaV2Checkbox
+from django_recaptcha.fields import ReCaptchaField
+from django_recaptcha.widgets import ReCaptchaV2Checkbox
 
 
 class ContactForm(forms.ModelForm):
@@ -18,8 +17,7 @@ class ContactForm(forms.ModelForm):
         attrs={'placeholder': 'Full name', 'class': 'form-control'}))
     email = forms.EmailField(label="Email", max_length=250, required=True, widget=forms.TextInput(
         attrs={'placeholder': 'Email', 'class': 'form-control'}))
-    phone = PhoneNumberField(label="Phone number", widget=PhoneNumberPrefixWidget(initial='US',
-                                                                                  attrs={'placeholder': 'Phone number',
+    phone = PhoneNumberField(label="Phone number", widget=PhoneNumberPrefixWidget('',attrs={'placeholder': 'Phone number',
                                                                                          'class': 'form'
                                                                                                   '-control'}),
                              required=False)
