@@ -1,9 +1,13 @@
 from django.shortcuts import render
 from django.views import generic
 from home.forms import ContactForm
-from .models import Leadership, Portfolio, Skill, Education, Course, MyContacts
+from .models import Leadership, Portfolio, Skill, Education, Course, MyContact, Feedback, Image, Contact, Video, Profile, Experience
 from django.contrib import messages
 from django.contrib.messages.views import SuccessMessageMixin
+from rest_framework import viewsets
+from .serializers import (EducationSerializer, ContactSerializer, PortfolioSerializer, SkillSerializer, ImageSerializer,
+                          ProfileSerializer, MyContactSerializer, FeedbackSerializer, CourseSerializer,
+                          LeadershipSerializer, VideoSerializer, ExperienceSerializer)
 
 
 # Create your views here.
@@ -71,7 +75,7 @@ class ResumeLeadershipView(generic.TemplateView):
         context["leaderships"] = leaderships
 
         return context
-
+    
 
 class ResumeSkillsView(generic.TemplateView):
     """View for the skills"""
@@ -109,7 +113,7 @@ class ContactView(generic.FormView, SuccessMessageMixin):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        contacts = MyContacts.objects.filter(is_active=True)
+        contacts = MyContact.objects.filter(is_active=True)
         context["contacts"] = contacts
 
         return context
@@ -119,3 +123,73 @@ class ContactView(generic.FormView, SuccessMessageMixin):
         form.save()
         messages.success(self.request, 'Your message has been submitted. Thank you!')
         return super().form_valid(form)
+
+
+class EducationViewSet(viewsets.ModelViewSet):
+    queryset = Education.objects.all()
+    serializer_class = EducationSerializer
+
+
+class ExperienceViewSet(viewsets.ModelViewSet):
+    queryset = Experience.objects.all()
+    serializer_class = ExperienceSerializer
+
+
+class LeadershipViewSet(viewsets.ModelViewSet):
+    queryset = Leadership.objects.all()
+    serializer_class = LeadershipSerializer
+
+
+class CourseViewSet(viewsets.ModelViewSet):
+    queryset = Course.objects.all()
+    serializer_class = CourseSerializer
+
+
+class ImageViewSet(viewsets.ModelViewSet):
+    queryset = Image.objects.all()
+    serializer_class = ImageSerializer
+
+
+class VideoViewSet(viewsets.ModelViewSet):
+    queryset = Video.objects.all()
+    serializer_class = VideoSerializer
+
+
+class MyContactViewSet(viewsets.ModelViewSet):
+    queryset = MyContact.objects.all()
+    serializer_class = MyContactSerializer
+
+
+class FeedbackViewSet(viewsets.ModelViewSet):
+    queryset = Feedback.objects.all()
+    serializer_class = FeedbackSerializer
+
+
+class SkillViewSet(viewsets.ModelViewSet):
+    queryset = Skill.objects.all()
+    serializer_class = SkillSerializer
+
+
+class ProfileViewSet(viewsets.ModelViewSet):
+    queryset = Profile.objects.all()
+    serializer_class = ProfileSerializer
+
+    def get_queryset(self):
+        return Profile.objects.prefetch_related(
+            'skills',
+            'courses',
+            'educations',
+            'links',
+            'leaderships',
+            'projects'
+        )
+
+
+class PortfolioViewSet(viewsets.ModelViewSet):
+    queryset = Portfolio.objects.all()
+    serializer_class = PortfolioSerializer
+
+
+class ContactViewSet(viewsets.ModelViewSet):
+    queryset = Contact.objects.all()
+    serializer_class = ContactSerializer

@@ -1,8 +1,10 @@
+import os
 from django.db import models
 from django.contrib.auth.models import User
 from django.template.defaultfilters import slugify
-from ckeditor.fields import RichTextField
+from django.core.exceptions import ValidationError
 from phonenumber_field.modelfields import PhoneNumberField
+from tinymce.models import HTMLField
 
 
 # Create your models here.
@@ -18,6 +20,7 @@ class Education(models.Model):
     date = models.DateTimeField(blank=True, null=True)
     year = models.CharField(blank=True, null=True, max_length=100)
     description = models.CharField(blank=True, null=True, max_length=250)
+    profiles = models.ManyToManyField('Profile', related_name='all_educations')
 
     class Meta:
         verbose_name = 'Education'
@@ -37,6 +40,7 @@ class Skill(models.Model):
     is_soft_skill = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
     category = models.CharField(max_length=70, blank=True, null=True)
+    profiles = models.ManyToManyField('Profile', related_name='all_skills')
 
     class Meta:
         verbose_name = 'Skill'
@@ -59,6 +63,7 @@ class Course(models.Model):
     is_active = models.BooleanField(default=True)
     date = models.DateTimeField(blank=True, null=True)
     description = models.CharField(blank=True, null=True, max_length=250)
+    profiles = models.ManyToManyField('Profile', related_name='all_courses')
 
     class Meta:
         verbose_name = 'Course'
@@ -73,7 +78,8 @@ class Leadership(models.Model):
     name = models.CharField(blank=True, null=True, max_length=500)
     is_active = models.BooleanField(default=True)
     date = models.DateTimeField(blank=True, null=True)
-    description = RichTextField(blank=True, null=True)
+    description = HTMLField()
+    profiles = models.ManyToManyField('Profile', related_name='all_leaderships')
 
     class Meta:
         verbose_name = 'Leadership'
@@ -83,7 +89,7 @@ class Leadership(models.Model):
         return self.name
 
 
-class MyContacts(models.Model):
+class MyContact(models.Model):
     """Model to represent links to external sources"""
     name = models.CharField(blank=True, null=True, max_length=250)
     data = models.CharField(blank=True, null=True, max_length=250)
@@ -91,6 +97,7 @@ class MyContacts(models.Model):
     category = models.CharField(blank=True, null=True, max_length=250)
     is_active = models.BooleanField(default=True)
     url = models.URLField(blank=True, null=True)
+    profiles = models.ManyToManyField('Profile', related_name='all_links')
 
     class Meta:
         verbose_name = 'MyContact'
@@ -115,12 +122,13 @@ class Portfolio(models.Model):
     is_active = models.BooleanField(default=True)
     slug = models.SlugField(null=True, blank=True)
     description = models.CharField(blank=True, null=True, max_length=250)
-    body = RichTextField(blank=True, null=True)
+    body = HTMLField()
     date = models.DateTimeField(blank=True, null=True)
     is_side_project = models.BooleanField(null=True, blank=True)
     url = models.URLField(null=True, blank=True)
     year = models.CharField(blank=True, null=True, max_length=70)
     technology = models.CharField(blank=True, null=True, max_length=1000)
+    profiles = models.ManyToManyField('Profile', related_name='all_projects')
 
     def save(self, *args, **kwargs):
         if not self.id:
@@ -146,20 +154,39 @@ class Portfolio(models.Model):
             return "https://res.cloudinary.com/dh13i9dce/image/upload/v1642216413/media/logos/default-thumb_dn1xzg.png"
 
 
+
+class Experience(models.Model):
+    job_title = models.CharField(max_length=250)
+    company_name = models.CharField(max_length=250)
+    location = models.CharField(max_length=250, blank=True, null=True)
+    start_date = models.DateField()
+    end_date = models.DateField(blank=True, null=True)  # null if currently employed
+    is_current = models.BooleanField(default=False)
+    description = HTMLField()
+    profiles = models.ManyToManyField('Profile', related_name='all_experiences')
+
+    class Meta:
+        ordering = ['-start_date']
+
+    def __str__(self):
+        return f"{self.job_title} at {self.company_name}"
+
+
 class Profile(models.Model):
     """Model for the user profile"""
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     title = models.CharField(max_length=250, blank=True, null=True)
-    biography = RichTextField(blank=True, null=True)
-    skills = models.ManyToManyField(Skill, blank=True)
+    biography = HTMLField()
     avatar = models.ImageField(blank=True, null=True, upload_to="avatars")
     resume = models.FileField(blank=True, null=True, upload_to="resumes")
     work = models.FileField(blank=True, null=True, upload_to="work_samples")
     courses = models.ManyToManyField(Course, blank=True)
     leaderships = models.ManyToManyField(Leadership, blank=True)
-    educations = models.ManyToManyField(Education, blank=True)
+    skills = models.ManyToManyField(Skill, blank=True)
     projects = models.ManyToManyField(Portfolio, blank=True)
-    links = models.ManyToManyField(MyContacts, blank=True)
+    links = models.ManyToManyField(MyContact, blank=True)
+    educations = models.ManyToManyField(Education, blank=True)
+    experiences = models.ManyToManyField(Experience, blank=True)
 
     class Meta:
         verbose_name = 'Profile'
@@ -258,6 +285,41 @@ class Image(models.Model):
             return self.image.url
         else:
             return "https://res.cloudinary.com/dh13i9dce/image/upload/v1642216413/media/logos/default-thumb_dn1xzg.png"
+
+
+
+def validate_video_file_extension(value):
+    ext = os.path.splitext(value.name)[1]  # [0] returns path+filename
+    valid_extensions = ['.mp4', '.avi', '.mov', '.mkv']
+    if not ext.lower() in valid_extensions:
+        raise ValidationError('Unsupported file extension.')
+
+class Video(models.Model):
+    name = models.CharField(max_length=100)
+    url = models.URLField(blank=True, null=True)
+    video_file = models.FileField(upload_to='videos/', validators=[validate_video_file_extension])
+    uploaded_at = models.DateTimeField(auto_now_add=True)
+    is_video = models.BooleanField(default=True)
+
+    def save(self, *args, **kwargs):
+        if self.url:
+            self.is_image = False
+        super(Video, self).save(*args, **kwargs)
+
+    class Meta:
+        verbose_name = 'Video'
+        verbose_name_plural = 'Videos'
+        ordering = ["name"]
+
+    def __str__(self):
+        return self.name
+
+    @property
+    def get_video_url(self):
+        if self.video and hasattr(self.video, 'url'):
+            return self.video.url
+        else:
+            return " "
 
 
 

@@ -17,9 +17,30 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
+from rest_framework import routers
+
+from home.views import (EducationViewSet, ContactViewSet, CourseViewSet, LeadershipViewSet, SkillViewSet, ImageViewSet,
+                        MyContactViewSet, ProfileViewSet, FeedbackViewSet, PortfolioViewSet, VideoViewSet, ExperienceViewSet)
+
+
+router = routers.DefaultRouter()
+router.register(r'educations', EducationViewSet)
+router.register(r'courses', CourseViewSet)
+router.register(r'profiles', ProfileViewSet)
+router.register(r'projects', PortfolioViewSet)
+router.register(r'mycontact', MyContactViewSet)
+router.register(r'skills', SkillViewSet)
+router.register(r'leaderships', LeadershipViewSet)
+router.register(r'images', ImageViewSet)
+router.register(r'feedbacks', FeedbackViewSet)
+router.register(r'contacts', ContactViewSet)
+router.register(r'videos', VideoViewSet)
+router.register(r'experiences', ExperienceViewSet)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('api/', include(router.urls)),
+    path('tinymce/', include('tinymce.urls')),
     path('', include('home.urls')),
     # path('captcha/', include('captcha.urls')),
 
