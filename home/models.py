@@ -219,12 +219,18 @@ class Profile(models.Model):
     """Model for a user's portfolio profile"""
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     title = models.CharField(max_length=250, blank=True, null=True)
-    biography = HTMLField()
+    biography = HTMLField(default="Passionate about building clean, scalable software that solves real-world problems.")
     avatar = models.ImageField(blank=True, null=True, upload_to="avatars")
     resume = models.FileField(blank=True, null=True, upload_to="resumes")
     resume_password = models.CharField(max_length=255, blank=True, null=True)
     work = models.FileField(blank=True, null=True, upload_to="work_samples")
-
+    welcome_summary = HTMLField(default="My passion...")
+    intro_summary = HTMLField(default="Passionate about building clean, scalable solutions.")
+    resume_summary = HTMLField(default="A quick overview of my experience, skills, and education.")
+    academic_projects_summary = HTMLField(
+        default="Projects built during my studies, focused on applying core concepts.")
+    side_projects_summary = HTMLField(default="Independent work exploring new tools and solving real problems.")
+    contact_summary = HTMLField(default="Let’s connect — I’m open to opportunities, ideas, or questions.")
     courses = models.ManyToManyField(Course, blank=True)
     leaderships = models.ManyToManyField(Leadership, blank=True)
     skills = models.ManyToManyField(Skill, blank=True)

@@ -143,7 +143,8 @@ class ProfileSerializer(serializers.ModelSerializer):
     class Meta:
         model = Profile
         fields = [
-            'user', 'title', 'biography', 'avatar', 'resume', 'work',
+            'user', 'title', 'biography', 'welcome_summary', 'intro_summary', 'resume_summary', 'contact_summary',
+            'academic_projects_summary', 'side_projects_summary', 'avatar', 'resume', 'work',
             'all_experiences', 'all_courses', 'all_leaderships', 'all_skills',
             'all_projects', 'all_links', 'all_educations',
             'get_avatar_url', 'get_resume_url', 'get_work_samples_url'

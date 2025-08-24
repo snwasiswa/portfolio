@@ -43,7 +43,14 @@ class ProfileAdminForm(forms.ModelForm):
         fields = '__all__'
         widgets = {
             'biography': TinyMCE(attrs={'cols': 80, 'rows': 30}),
+            'welcome_summary': TinyMCE(attrs={'cols': 80, 'rows': 30}),
+            'intro_summary': TinyMCE(attrs={'cols': 80, 'rows': 30}),
+            'resume_summary': TinyMCE(attrs={'cols': 80, 'rows': 30}),
+            'academic_projects_summary': TinyMCE(attrs={'cols': 80, 'rows': 30}),
+            'side_projects_summary': TinyMCE(attrs={'cols': 80, 'rows': 30}),
+            'contact_summary': TinyMCE(attrs={'cols': 80, 'rows': 30}),
         }
+
 
 @admin.register(Profile)
 class ProfileAdmin(admin.ModelAdmin):
