@@ -38,8 +38,9 @@ ALLOWED_HOSTS = ["*"]
 INSTALLED_APPS = [
 
     'home',
-    'ckeditor',
+    'tinymce',
     'rest_framework',
+    'watson',
     'corsheaders',
     'crispy_forms',
     'crispy_bootstrap5',
