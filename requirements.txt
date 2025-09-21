@@ -48,7 +48,7 @@ phonenumbers==9.0.4
 pillow==11.2.1
 ply==3.11
 proto-plus==1.26.1
-protobuf==5.29.5
+protobuf
 psycopg2-binary==2.9.10
 pyasn1==0.6.1
 pyasn1_modules==0.4.2
@@ -66,7 +66,7 @@ six==1.17.0
 soupsieve==2.7
 sqlparse==0.5.3
 starkbank-ecdsa==2.2.0
-stone==3.3.9
+stone
 tinycss2==1.4.0
 tinyhtml5==2.0.0
 typing_extensions==4.13.2
