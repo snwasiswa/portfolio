@@ -238,3 +238,7 @@ ADMIN_NAME = env("ADMIN_NAME")
 
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
 CRISPY_TEMPLATE_PACK = 'bootstrap5'
+
+CORS_ALLOWED_ORIGINS = [
+    "https://s-n-w.netlify.app",
+]
