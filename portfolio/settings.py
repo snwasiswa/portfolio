@@ -241,4 +241,6 @@ CRISPY_TEMPLATE_PACK = 'bootstrap5'
 
 CORS_ALLOWED_ORIGINS = [
     "https://s-n-w.netlify.app",
+    "https://stevewasiswa.com",
+    "https://www.stevewasiswa.com",
 ]
