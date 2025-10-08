@@ -234,7 +234,7 @@ RECAPTCHA_PRIVATE_KEY = str(env("RECAPTCHA_PRIVATE_KEY"))
 RECAPTCHA_SECRET_KEY = str(env("RECAPTCHA_PRIVATE_KEY"))
 
 # Administrator configurations
-ADMIN_EMAIL = 'stevewasiswa@gmail.com'
+ADMIN_EMAIL = env("ADMIN_EMAIL")
 ADMIN_NAME = env("ADMIN_NAME")
 
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
