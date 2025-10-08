@@ -6,9 +6,12 @@ Defines all Django REST Framework (DRF) serializers for the portfolio and resume
 Serializers convert Django models to JSON (and vice versa) for API communication.
 This includes models for user profiles, education, skills, experience, projects, media, and contact data.
 """
-
+import requests
 from rest_framework import serializers
 from django.contrib.auth.models import User
+from django.core.mail import send_mail, BadHeaderError
+from django.shortcuts import HttpResponse
+from portfolio import settings
 from .models import (
     Leadership, Profile, Contact, Feedback, Image, Video,
     Education, Skill, Portfolio, Course, MyContact, Experience
@@ -72,10 +75,66 @@ class VideoSerializer(serializers.ModelSerializer):
 class ContactSerializer(serializers.ModelSerializer):
     """
     Serializer for Contact form submissions.
+    Sends email on successful submission and validates reCAPTCHA.
     """
+    captcha = serializers.CharField(write_only=True, required=False)
+
     class Meta:
         model = Contact
         fields = '__all__'
+
+    def validate_captcha(self, value):
+        """
+        Validate reCAPTCHA token with Google's verification API.
+        """
+        secret_key = settings.RECAPTCHA_SECRET_KEY  # Store in your Django settings
+        response = requests.post(
+            'https://www.google.com/recaptcha/api/siteverify',
+            data={
+                'secret': secret_key,
+                'response': value
+            }
+        )
+        result = response.json()
+
+        if not result.get('success'):
+            raise serializers.ValidationError('Invalid reCAPTCHA. Please try again.')
+
+        return value
+
+    def create(self, validated_data):
+        validated_data.pop('captcha', None)  # Remove captcha before saving
+        instance = super().create(validated_data)
+        self.send_email(instance)
+        return instance
+
+    def send_email(self, instance):
+        """
+        Send an email notification to the site administrator when a new contact is submitted.
+        """
+        subject = instance.subject or "New Contact Form Submission"
+        message = (
+            "You got a new message:\n\n"
+            "Sender Info:\n"
+            f"Subject: {instance.subject}\n"
+            f"Name: {instance.name}\n"
+            f"Email: {instance.email}\n"
+            f"Phone number: {instance.phone or 'N/A'}\n\n"
+            f"{instance.message}"
+        )
+
+        try:
+            send_mail(
+                subject=subject,
+                message=message,
+                from_email=str(settings.ADMIN_EMAIL),
+                recipient_list=[str(settings.ADMIN_EMAIL)],
+                fail_silently=False,
+            )
+        except BadHeaderError:
+            return HttpResponse('Invalid header found')
+
+
 
 
 class FeedbackSerializer(serializers.ModelSerializer):
