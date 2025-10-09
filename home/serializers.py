@@ -112,6 +112,7 @@ class ContactSerializer(serializers.ModelSerializer):
         Send an email notification to the site administrator when a new contact is submitted.
         """
         subject = instance.subject or "New Contact Form Submission"
+        formatted_message = instance.message.replace('\n', '<br>')
 
         message = f"""
         <html>
@@ -140,7 +141,7 @@ class ContactSerializer(serializers.ModelSerializer):
 
             <h3 style="margin: 30px 0 10px 0;">Message</h3>
             <div style="border: 1px solid #ddd; padding: 10px; background-color: #f9f9f9; line-height: 1.5;">
-              {instance.message.replace('\n', '<br>')}
+              {formatted_message}
             </div>
 
             <p style="margin-top: 30px;">
