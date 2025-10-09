@@ -9,6 +9,7 @@ https://docs.djangoproject.com/en/4.0/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.0/ref/settings/
 """
+
 import os
 import environ
 from pathlib import Path
@@ -16,27 +17,21 @@ from django.contrib import messages
 from django.contrib.messages import constants as message_constants
 import dj_database_url
 
-# Build paths inside the project like this: os.path.join(BASE_DIR, ...)
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR_TEMPLATES = Path(__file__).resolve().parent.parent
-
+# Initialize environment variables
 env = environ.Env(DEBUG=(bool, False))
 
+# Paths
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+BASE_DIR_TEMPLATES = Path(__file__).resolve().parent.parent
+
+# SECURITY
 SECRET_KEY = env("SECRET_KEY")
-
-# SECURITY WARNING: don't run with debug turned on in production!
-# Change this to "False" when you are ready for production
 DEBUG = env("DEBUG")
-
 SECURE_SSL_REDIRECT = True
-
 ALLOWED_HOSTS = ["*"]
 
 # Application definition
 INSTALLED_APPS = [
-
     'home',
     'tinymce',
     'rest_framework',
@@ -47,14 +42,18 @@ INSTALLED_APPS = [
     'captcha',
     'django_bootstrap5',
     'phonenumber_field',
+
+    # Django default apps
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'storages',
 
+    # Cloudinary for media storage
+    'cloudinary',
+    'cloudinary_storage',
 ]
 
 MIDDLEWARE = [
@@ -91,43 +90,26 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'portfolio.wsgi.application'
 
-# Database
+# DATABASES
 DATABASES = {
     "default": dj_database_url.parse(os.environ.get("DATABASE_URL"))
 }
 
-# https://docs.djangoproject.com/en/4.0/ref/settings/#databases
-
 # Password validation
-# https://docs.djangoproject.com/en/4.0/ref/settings/#auth-password-validators
-
 AUTH_PASSWORD_VALIDATORS = [
-    {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
-    },
+    {'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator'},
+    {'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator'},
+    {'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator'},
+    {'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator'},
 ]
 
-
-# Internationalization
-# https://docs.djangoproject.com/en/4.0/topics/i18n/
-
+# Localization
 LANGUAGE_CODE = 'en-us'
-
 TIME_ZONE = 'UTC'
-
 USE_I18N = True
-
 USE_TZ = True
 
+# Messages to Bootstrap classes mapping
 MESSAGE_TAGS = {
     messages.DEBUG: 'alert-info',
     messages.INFO: 'alert-info',
@@ -136,91 +118,66 @@ MESSAGE_TAGS = {
     messages.ERROR: 'alert-danger',
 }
 
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/4.0/howto/static-files/
-
+# Static files (served via WhiteNoise)
 STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-
 STATIC_URL = '/static/'
-MEDIA_URL = '/media/'
-
 STATICFILES_DIRS = [
-   os.path.join(BASE_DIR, 'static'),
-   # os.path.join(BASE_DIR, 'media')
+    os.path.join(BASE_DIR, 'static'),
 ]
-
-DROPBOX_APP_KEY = env("APP_KEY")
-DROPBOX_APP_SECRET = env("APP_SECRET")
-DROPBOX_OAUTH2_REFRESH_TOKEN = env('REFRESH_OAUTH_TOKEN')
-
-DROPBOX_ROOT_PATH = '/media/'
-
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
-DEFAULT_FILE_STORAGE = 'storages.backends.dropbox.DropBoxStorage'
+
+# Media files
+MEDIA_ROOT = ''
+MEDIA_URL = ''
+
+# Cloudinary Configuration
+CLOUDINARY_STORAGE = {
+    'CLOUD_NAME': env('CLOUDINARY_CLOUD_NAME'),
+    'API_KEY': env('CLOUDINARY_API_KEY'),
+    'API_SECRET': env('CLOUDINARY_API_SECRET'),
+}
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
 # Default primary key field type
-# https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
-
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-# CKEDITOR configurations
+# CKEditor Configuration
 CKEDITOR_CONFIGS = {
     'default': {
         'skin': 'moono-lisa',
-        'toolbar_Basic': [
-            ['Source', '-', 'Bold', 'Italic']
-        ],
+        'toolbar': 'YourCustomToolbarConfig',
         'toolbar_YourCustomToolbarConfig': [
             {'name': 'document', 'items': ['Source', '-', 'Save', 'NewPage', 'Preview', 'Print', '-', 'Templates']},
             {'name': 'clipboard', 'items': ['Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord', '-', 'Undo', 'Redo']},
             {'name': 'editing', 'items': ['Find', 'Replace', '-', 'SelectAll']},
-            {'name': 'forms',
-             'items': ['Form', 'Checkbox', 'Radio', 'TextField', 'Textarea', 'Select', 'Button', 'ImageButton',
-                       'HiddenField']},
+            {'name': 'forms', 'items': [
+                'Form', 'Checkbox', 'Radio', 'TextField', 'Textarea', 'Select', 'Button', 'ImageButton', 'HiddenField']},
             '/',
-            {'name': 'basicstyles',
-             'items': ['Bold', 'Italic', 'Underline', 'Strike', 'Subscript', 'Superscript', '-', 'RemoveFormat']},
-            {'name': 'paragraph',
-             'items': ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'Blockquote', 'CreateDiv', '-',
-                       'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock', '-', 'BidiLtr', 'BidiRtl',
-                       'Language']},
+            {'name': 'basicstyles', 'items': ['Bold', 'Italic', 'Underline', 'Strike', 'Subscript', 'Superscript', '-', 'RemoveFormat']},
+            {'name': 'paragraph', 'items': [
+                'NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'Blockquote', 'CreateDiv',
+                '-', 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock', '-', 'BidiLtr', 'BidiRtl', 'Language']},
             {'name': 'links', 'items': ['Link', 'Unlink', 'Anchor']},
-            {'name': 'insert',
-             'items': ['Image', 'Flash', 'Table', 'HorizontalRule', 'Smiley', 'SpecialChar', 'PageBreak', 'Iframe']},
+            {'name': 'insert', 'items': [
+                'Image', 'Flash', 'Table', 'HorizontalRule', 'Smiley', 'SpecialChar', 'PageBreak', 'Iframe']},
             '/',
             {'name': 'styles', 'items': ['Styles', 'Format', 'Font', 'FontSize']},
             {'name': 'colors', 'items': ['TextColor', 'BGColor']},
             {'name': 'tools', 'items': ['Maximize', 'ShowBlocks']},
             {'name': 'about', 'items': ['About']},
             '/',
-            {'name': 'yourcustomtools', 'items': [
-                'Preview',
-                'Maximize',
-
-            ]},
+            {'name': 'yourcustomtools', 'items': ['Preview', 'Maximize']},
         ],
-        'toolbar': 'YourCustomToolbarConfig',
-        'toolbarGroups': [{ 'name': 'document', 'groups': [ 'mode', 'document', 'doctools' ] }],
+        'toolbarGroups': [{'name': 'document', 'groups': ['mode', 'document', 'doctools']}],
         'tabSpaces': 4,
         'extraPlugins': ','.join([
-            'uploadimage',
-            'div',
-            'autolink',
-            'autoembed',
-            'embedsemantic',
-            'autogrow',
-            'widget',
-            'lineutils',
-            'clipboard',
-            'dialog',
-            'dialogui',
-            'elementspath'
+            'uploadimage', 'div', 'autolink', 'autoembed', 'embedsemantic',
+            'autogrow', 'widget', 'lineutils', 'clipboard', 'dialog', 'dialogui', 'elementspath'
         ]),
     }
 }
 
-# EMAIL SETTINGS
+# Email configuration
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = env("EMAIL_HOST")
 EMAIL_PORT = env("EMAIL_PORT")
@@ -228,16 +185,19 @@ EMAIL_HOST_USER = env("EMAIL_HOST_USER")
 EMAIL_HOST_PASSWORD = env("EMAIL_HOST_PASSWORD")
 EMAIL_USE_TLS = env("EMAIL_USE_TLS")
 DEFAULT_FROM_EMAIL = env("DEFAULT_FROM_EMAIL")
- # Captcha configurations
+
+# Captcha configuration
 RECAPTCHA_PUBLIC_KEY = str(env("RECAPTCHA_PUBLIC_KEY"))
 RECAPTCHA_PRIVATE_KEY = str(env("RECAPTCHA_PRIVATE_KEY"))
 RECAPTCHA_SECRET_KEY = str(env("RECAPTCHA_PRIVATE_KEY"))
 
-# Administrator configurations
+# Administrator configuration
 ADMIN_EMAIL = env("ADMIN_EMAIL")
 ADMIN_NAME = env("ADMIN_NAME")
 
+# Crispy Forms
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
 CRISPY_TEMPLATE_PACK = 'bootstrap5'
 
+# CORS
 CORS_ALLOWED_ORIGINS = env.list("CORS_ALLOWED_ORIGINS")
