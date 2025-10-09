@@ -123,7 +123,7 @@ class MyContact(models.Model):
     """Model to store user’s external links (e.g. LinkedIn, GitHub)"""
     name = models.CharField(blank=True, null=True, max_length=250)
     data = models.CharField(blank=True, null=True, max_length=250)
-    icon = models.ImageField(blank=True, null=True, upload_to="images")
+    icon = models.ImageField(blank=True, null=True, storage=MediaCloudinaryStorage(), upload_to="images")
     category = models.CharField(blank=True, null=True, max_length=250)
     is_active = models.BooleanField(default=True)
     url = models.URLField(blank=True, null=True)
