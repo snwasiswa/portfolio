@@ -17,7 +17,6 @@ from .models import (
     Education, Skill, Portfolio, Course, MyContact, Experience
 )
 
-
 class UserSerializer(serializers.ModelSerializer):
     """
     Serializer for Django's built-in User model.
@@ -127,7 +126,7 @@ class ContactSerializer(serializers.ModelSerializer):
             send_mail(
                 subject=subject,
                 message=message,
-                from_email=str(settings.ADMIN_EMAIL),
+                from_email=str(settings.DEFAULT_FROM_EMAIL),
                 recipient_list=[str(settings.ADMIN_EMAIL)],
                 fail_silently=False,
             )
