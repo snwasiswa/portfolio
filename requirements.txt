@@ -67,7 +67,7 @@ six==1.17.0
 soupsieve==2.7
 sqlparse==0.5.3
 starkbank-ecdsa==2.2.0
-stone==3.3.9
+stone
 tinycss2==1.4.0
 tinyhtml5==2.0.0
 typing_extensions==4.13.2
