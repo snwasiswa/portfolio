@@ -16,6 +16,7 @@ from django.core.exceptions import ValidationError
 from phonenumber_field.modelfields import PhoneNumberField
 from tinymce.models import HTMLField
 from django.contrib.auth.hashers import make_password, check_password
+from cloudinary_storage.storage import MediaCloudinaryStorage
 
 
 # ==========================
@@ -220,7 +221,7 @@ class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     title = models.CharField(max_length=250, blank=True, null=True)
     biography = HTMLField(default="Passionate about building clean, scalable software that solves real-world problems.")
-    avatar = models.ImageField(blank=True, null=True, upload_to="avatars")
+    avatar = models.ImageField(blank=True, null=True, storage=MediaCloudinaryStorage(),upload_to="avatars")
     resume = models.FileField(blank=True, null=True, upload_to="resumes")
     resume_password = models.CharField(max_length=255, blank=True, null=True)
     work = models.FileField(blank=True, null=True, upload_to="work_samples")
