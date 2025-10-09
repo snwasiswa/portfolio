@@ -51,7 +51,7 @@ class Education(models.Model):
 class Skill(models.Model):
     """Model to store skills and their attributes"""
     name = models.CharField(max_length=25, blank=True, null=True)
-    image = models.FileField(upload_to="logos", null=True, blank=True)
+    image = models.FileField(upload_to="logos", storage=MediaCloudinaryStorage(), null=True, blank=True)
     rating = models.IntegerField(default=4, null=True, blank=True)
     is_key_skill = models.BooleanField(default=False)
     is_hard_skill = models.BooleanField(default=False)
@@ -152,7 +152,7 @@ class MyContact(models.Model):
 class Portfolio(models.Model):
     """Model to store project/portfolio items"""
     name = models.CharField(blank=True, null=True, max_length=250)
-    image = models.ImageField(blank=True, null=True, upload_to="portfolios")
+    image = models.ImageField(blank=True, null=True, storage=MediaCloudinaryStorage(), upload_to="portfolios")
     is_active = models.BooleanField(default=True)
     slug = models.SlugField(null=True, blank=True)
     description = models.CharField(blank=True, null=True, max_length=250)
@@ -222,9 +222,9 @@ class Profile(models.Model):
     title = models.CharField(max_length=250, blank=True, null=True)
     biography = HTMLField(default="Passionate about building clean, scalable software that solves real-world problems.")
     avatar = models.ImageField(blank=True, null=True, storage=MediaCloudinaryStorage(),upload_to="avatars")
-    resume = models.FileField(blank=True, null=True, upload_to="resumes")
+    resume = models.FileField(blank=True, null=True, storage=MediaCloudinaryStorage(), upload_to="resumes")
     resume_password = models.CharField(max_length=255, blank=True, null=True)
-    work = models.FileField(blank=True, null=True, upload_to="work_samples")
+    work = models.FileField(blank=True, null=True, storage=MediaCloudinaryStorage(), upload_to="work_samples")
     welcome_summary = HTMLField(default="My passion...")
     intro_summary = HTMLField(default="Passionate about building clean, scalable solutions.")
     resume_summary = HTMLField(default="A quick overview of my experience, skills, and education.")
@@ -335,7 +335,7 @@ class Image(models.Model):
     """Model for uploaded images"""
     name = models.CharField(blank=True, null=True, max_length=250)
     url = models.URLField(blank=True, null=True)
-    image = models.ImageField(blank=True, null=True, upload_to="images")
+    image = models.ImageField(blank=True, null=True, storage=MediaCloudinaryStorage(), upload_to="images")
     is_image = models.BooleanField(default=True)
 
     class Meta:
@@ -373,7 +373,8 @@ class Video(models.Model):
     """Model for uploaded videos"""
     name = models.CharField(max_length=100)
     url = models.URLField(blank=True, null=True)
-    video_file = models.FileField(upload_to='videos/', validators=[validate_video_file_extension])
+    video_file = models.FileField(upload_to='videos/', storage=MediaCloudinaryStorage(),
+                                  validators=[validate_video_file_extension])
     uploaded_at = models.DateTimeField(auto_now_add=True)
     is_video = models.BooleanField(default=True)
 
