@@ -112,15 +112,47 @@ class ContactSerializer(serializers.ModelSerializer):
         Send an email notification to the site administrator when a new contact is submitted.
         """
         subject = instance.subject or "New Contact Form Submission"
-        message = (
-            "You got a new message:\n\n"
-            "Sender Info:\n"
-            f"Subject: {instance.subject}\n"
-            f"Name: {instance.name}\n"
-            f"Email: {instance.email}\n"
-            f"Phone number: {instance.phone or 'N/A'}\n\n"
-            f"{instance.message}"
-        )
+
+        message = f"""
+        <html>
+          <body style="font-family: Arial, sans-serif; font-size: 14px; color: #333;">
+            <p>You have received a new message from the contact form.</p>
+
+            <h3 style="margin: 20px 0 10px 0;">Sender Information</h3>
+            <table cellspacing="0" cellpadding="3" style="border-collapse: collapse;">
+              <tr>
+                <td style="font-weight: bold; vertical-align: top;">Subject:</td>
+                <td>{instance.subject or 'No subject provided'}</td>
+              </tr>
+              <tr>
+                <td style="font-weight: bold; vertical-align: top;">Name:</td>
+                <td>{instance.name}</td>
+              </tr>
+              <tr>
+                <td style="font-weight: bold; vertical-align: top;">Email:</td>
+                <td>{instance.email}</td>
+              </tr>
+              <tr>
+                <td style="font-weight: bold; vertical-align: top;">Phone:</td>
+                <td>{instance.phone or 'N/A'}</td>
+              </tr>
+            </table>
+
+            <h3 style="margin: 30px 0 10px 0;">Message</h3>
+            <div style="border: 1px solid #ddd; padding: 10px; background-color: #f9f9f9; line-height: 1.5;">
+              {instance.message.replace('\n', '<br>')}
+            </div>
+
+            <p style="margin-top: 30px;">
+              Best regards,<br>
+              Your Website Team
+            </p>
+            <p style="font-size: 12px; color: #777;">
+              This is an automated message from your website's contact form.
+            </p>
+          </body>
+        </html>
+        """
 
         try:
             send_mail(
