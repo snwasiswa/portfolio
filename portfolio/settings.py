@@ -141,40 +141,37 @@ DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 # Default primary key field type
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-# CKEditor Configuration
-CKEDITOR_CONFIGS = {
-    'default': {
-        'skin': 'moono-lisa',
-        'toolbar': 'YourCustomToolbarConfig',
-        'toolbar_YourCustomToolbarConfig': [
-            {'name': 'document', 'items': ['Source', '-', 'Save', 'NewPage', 'Preview', 'Print', '-', 'Templates']},
-            {'name': 'clipboard', 'items': ['Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord', '-', 'Undo', 'Redo']},
-            {'name': 'editing', 'items': ['Find', 'Replace', '-', 'SelectAll']},
-            {'name': 'forms', 'items': [
-                'Form', 'Checkbox', 'Radio', 'TextField', 'Textarea', 'Select', 'Button', 'ImageButton', 'HiddenField']},
-            '/',
-            {'name': 'basicstyles', 'items': ['Bold', 'Italic', 'Underline', 'Strike', 'Subscript', 'Superscript', '-', 'RemoveFormat']},
-            {'name': 'paragraph', 'items': [
-                'NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'Blockquote', 'CreateDiv',
-                '-', 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock', '-', 'BidiLtr', 'BidiRtl', 'Language']},
-            {'name': 'links', 'items': ['Link', 'Unlink', 'Anchor']},
-            {'name': 'insert', 'items': [
-                'Image', 'Flash', 'Table', 'HorizontalRule', 'Smiley', 'SpecialChar', 'PageBreak', 'Iframe']},
-            '/',
-            {'name': 'styles', 'items': ['Styles', 'Format', 'Font', 'FontSize']},
-            {'name': 'colors', 'items': ['TextColor', 'BGColor']},
-            {'name': 'tools', 'items': ['Maximize', 'ShowBlocks']},
-            {'name': 'about', 'items': ['About']},
-            '/',
-            {'name': 'yourcustomtools', 'items': ['Preview', 'Maximize']},
-        ],
-        'toolbarGroups': [{'name': 'document', 'groups': ['mode', 'document', 'doctools']}],
-        'tabSpaces': 4,
-        'extraPlugins': ','.join([
-            'uploadimage', 'div', 'autolink', 'autoembed', 'embedsemantic',
-            'autogrow', 'widget', 'lineutils', 'clipboard', 'dialog', 'dialogui', 'elementspath'
-        ]),
-    }
+TINYMCE_DEFAULT_CONFIG = {
+    'height': 500,
+    'width': '100%',
+    'menubar': True,
+    'plugins': (
+        'advlist autolink lists link image charmap print preview anchor '
+        'searchreplace visualblocks code fullscreen insertdatetime media table '
+        'paste code help wordcount autosave emoticons template'
+    ),
+    'toolbar': (
+        'undo redo | formatselect | fontsizeselect | fontselect | '
+        'bold italic underline strikethrough forecolor backcolor | '
+        'alignleft aligncenter alignright alignjustify | '
+        'bullist numlist outdent indent | link image media table | '
+        'charmap emoticons | code preview fullscreen | '
+        'template insertdatetime | removeformat help'
+    ),
+    'fontsize_formats': '8pt 10pt 12pt 14pt 18pt 24pt 36pt',
+    'font_formats': (
+        'Arial=arial,helvetica,sans-serif;'
+        'Courier New=courier new,courier,monospace;'
+        'Georgia=georgia,palatino;'
+        'Tahoma=tahoma,arial,helvetica,sans-serif;'
+        'Times New Roman=times new roman,times;'
+        'Verdana=verdana,geneva;'
+    ),
+    'autosave_ask_before_unload': True,
+    'autosave_interval': '30s',
+    'autosave_retention': '2m',
+    'image_advtab': True,
+    'content_style': 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }',
 }
 
 # Email configuration
