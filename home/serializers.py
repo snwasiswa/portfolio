@@ -11,13 +11,12 @@ from rest_framework import serializers
 from django.contrib.auth.models import User
 from django.core.mail import send_mail, BadHeaderError
 from django.shortcuts import HttpResponse
-from portfolio import local_settings
+from portfolio import settings
 from .models import (
     Leadership, Profile, Contact, Feedback, ProjectImage, Video,
     Education, Skill, Portfolio, Course, MyContact, Experience
 )
 
-settings = local_settings
 
 class UserSerializer(serializers.ModelSerializer):
     """
