@@ -20,14 +20,14 @@ from django.views import generic
 from home.forms import ContactForm
 from .models import (
     Leadership, Portfolio, Skill, Education, Course, MyContact,
-    Feedback, Image, Contact, Video, Profile, Experience
+    Feedback, ProjectImage, Contact, Video, Profile, Experience
 )
 from django.contrib import messages
 from django.contrib.messages.views import SuccessMessageMixin
 from rest_framework import viewsets
 from .serializers import (
     EducationSerializer, ContactSerializer, PortfolioSerializer, SkillSerializer,
-    ImageSerializer, ProfileSerializer, MyContactSerializer, FeedbackSerializer,
+    ProjectImageSerializer, ProfileSerializer, MyContactSerializer, FeedbackSerializer,
     CourseSerializer, LeadershipSerializer, VideoSerializer, ExperienceSerializer
 )
 from rest_framework.views import APIView
@@ -289,12 +289,12 @@ class CourseViewSet(viewsets.ModelViewSet):
     serializer_class = CourseSerializer
 
 
-class ImageViewSet(viewsets.ModelViewSet):
+class ProjectImageViewSet(viewsets.ModelViewSet):
     """
     API endpoint for managing uploaded images.
     """
-    queryset = Image.objects.all()
-    serializer_class = ImageSerializer
+    queryset = ProjectImage.objects.all()
+    serializer_class = ProjectImageSerializer
 
 
 class VideoViewSet(viewsets.ModelViewSet):

@@ -331,32 +331,43 @@ class Feedback(models.Model):
 # Image Model
 # ==========================
 
-class Image(models.Model):
-    """Model for uploaded images"""
+class ProjectImage(models.Model):
+    """Model for images associated with a project/portfolio item"""
+    portfolio = models.ForeignKey(
+        'Portfolio',
+        on_delete=models.CASCADE,
+        related_name='images'
+    )
     name = models.CharField(blank=True, null=True, max_length=250)
     url = models.URLField(blank=True, null=True)
-    image = models.ImageField(blank=True, null=True, storage=MediaCloudinaryStorage(), upload_to="images")
+    image = models.ImageField(
+        blank=True,
+        null=True,
+        storage=MediaCloudinaryStorage(),
+        upload_to="projects"
+    )
     is_image = models.BooleanField(default=True)
 
     class Meta:
-        verbose_name = 'Image'
-        verbose_name_plural = 'Images'
+        verbose_name = 'Project Image'
+        verbose_name_plural = 'Project Images'
         ordering = ["name"]
 
     def save(self, *args, **kwargs):
+        # If URL exists, mark this as not an uploaded image
         if self.url:
             self.is_image = False
         super().save(*args, **kwargs)
 
     def __str__(self):
-        return self.name or "Unnamed Image"
+        return self.name or f"Image for {self.portfolio.name}"
 
     @property
     def get_image_url(self):
+        # Return image URL if exists, else default placeholder
         if self.image and hasattr(self.image, 'url'):
             return self.image.url
         return "https://res.cloudinary.com/dh13i9dce/image/upload/v1642216413/media/logos/default-thumb_dn1xzg.png"
-
 
 # ==========================
 # Video Model

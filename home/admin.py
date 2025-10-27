@@ -14,8 +14,8 @@ from django.contrib import admin
 from django import forms
 from tinymce.widgets import TinyMCE
 from .models import (
-    Leadership, Profile, Contact, Feedback, Image,
-    Education, Skill, Portfolio, Course, MyContact, Video, Experience
+    Leadership, Profile, Contact, Feedback, ProjectImage,
+    Education, Skill, Portfolio, Course, MyContact, Video, Experience,
 )
 
 # -------------------------------
@@ -63,16 +63,8 @@ class ProfileAdmin(admin.ModelAdmin):
 
 
 # -------------------------------
-# Image & Video Admins
+# Video Admin
 # -------------------------------
-
-@admin.register(Image)
-class ImageAdmin(admin.ModelAdmin):
-    """
-    Admin configuration for Image model.
-    """
-    list_display = ('id', 'name')
-
 
 @admin.register(Video)
 class VideoAdmin(admin.ModelAdmin):
@@ -93,6 +85,17 @@ class EducationAdmin(admin.ModelAdmin):
     """
     list_display = ('id', 'degree', 'school', 'major')
 
+
+# -------------------------------
+# Portfolio/Project Image Admin
+# -------------------------------
+
+@admin.register(ProjectImage)
+class ProjectImageAdmin(admin.ModelAdmin):
+    """
+    Admin configuration for ProjectImage model.
+    """
+    list_display = ('portfolio', 'image', 'url')
 
 # -------------------------------
 # Leadership Admin

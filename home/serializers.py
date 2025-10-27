@@ -11,11 +11,13 @@ from rest_framework import serializers
 from django.contrib.auth.models import User
 from django.core.mail import send_mail, BadHeaderError
 from django.shortcuts import HttpResponse
-from portfolio import settings
+from portfolio import local_settings
 from .models import (
-    Leadership, Profile, Contact, Feedback, Image, Video,
+    Leadership, Profile, Contact, Feedback, ProjectImage, Video,
     Education, Skill, Portfolio, Course, MyContact, Experience
 )
+
+settings = local_settings
 
 class UserSerializer(serializers.ModelSerializer):
     """
@@ -53,21 +55,21 @@ class SkillSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
-class ImageSerializer(serializers.ModelSerializer):
-    """
-    Serializer for Image model.
-    """
-    class Meta:
-        model = Image
-        fields = '__all__'
-
-
 class VideoSerializer(serializers.ModelSerializer):
     """
     Serializer for Video model.
     """
     class Meta:
         model = Video
+        fields = '__all__'
+
+
+class ProjectImageSerializer(serializers.ModelSerializer):
+    """
+    Serializer for ProjectImage model.
+    """
+    class Meta:
+        model = ProjectImage
         fields = '__all__'
 
 
@@ -200,9 +202,13 @@ class PortfolioSerializer(serializers.ModelSerializer):
     """
     Serializer for Portfolio (project) model.
     """
+    images  = ProjectImageSerializer(many=True, read_only=True)
+
     class Meta:
         model = Portfolio
-        fields = '__all__'
+        fields = ["id", "name", "slug", "description", "body", "date", "year", "url", "technology", "is_side_project",
+                   "for_resume", "images",
+        ]
 
 
 class LeadershipSerializer(serializers.ModelSerializer):
