@@ -14,7 +14,8 @@ import dj_database_url
 # ENVIRONMENT CONFIGURATION
 # ------------------------------------------------------------------------------
 
-BASE_DIR = Path(__file__).resolve().parent.parent
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+BASE_DIR_TEMPLATES = Path(__file__).resolve().parent.parent
 
 # Initialize environment variables
 env = environ.Env(
@@ -22,9 +23,11 @@ env = environ.Env(
     ENVIRONMENT=(str, "production"),  # "local" or "production"
 )
 
+env_path = os.path.join(BASE_DIR, ".env")
+
 # Load .env only if it exists (for local development)
-if os.path.exists(BASE_DIR / ".env"):
-    environ.Env.read_env(BASE_DIR / ".env")
+if os.path.exists(env_path):
+    environ.Env.read_env(env_path)
 
 ENVIRONMENT = env("ENVIRONMENT")
 DEBUG = env("DEBUG")
@@ -85,7 +88,7 @@ ROOT_URLCONF = 'portfolio.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / 'templates'],
+        'DIRS': [BASE_DIR_TEMPLATES / 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -141,9 +144,12 @@ MESSAGE_TAGS = {
     messages.ERROR: 'alert-danger',
 }
 
+# Static files (served via WhiteNoise)
+STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 STATIC_URL = '/static/'
-STATIC_ROOT = BASE_DIR / 'staticfiles'
-STATICFILES_DIRS = [BASE_DIR / 'static']
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'static'),
+]
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 # Cloudinary for media
