@@ -35,7 +35,7 @@ DEBUG = env("DEBUG")
 
 SECRET_KEY = env("SECRET_KEY")
 ALLOWED_HOSTS = env.list("ALLOWED_HOSTS", default=["*"])
-SECURE_SSL_REDIRECT = ENVIRONMENT == "production"
+SECURE_SSL_REDIRECT = env.bool("SECURE_SSL_REDIRECT", default=True)
 CSRF_TRUSTED_ORIGINS = env.list("CSRF_TRUSTED_ORIGINS", default=[])
 
 # ------------------------------------------------------------------------------
@@ -158,7 +158,7 @@ DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 # EMAIL CONFIGURATION
 # ------------------------------------------------------------------------------
 
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_BACKEND = env('EMAIL_BACKEND')
 EMAIL_HOST = env("EMAIL_HOST")
 EMAIL_PORT = env("EMAIL_PORT")
 EMAIL_HOST_USER = env("EMAIL_HOST_USER")
@@ -229,7 +229,7 @@ CRISPY_TEMPLATE_PACK = 'bootstrap5'
 
 CORS_ALLOWED_ORIGINS = env.list("CORS_ALLOWED_ORIGINS", default=[])
 
-CORS_ALLOW_ALL_ORIGINS = env("CORS_ALLOW_ALL_ORIGINS").strip().lower() in ("true", "1", "yes")
+CORS_ALLOW_ALL_ORIGINS = env.bool("CORS_ALLOW_ALL_ORIGINS", default=False)
 
 # ------------------------------------------------------------------------------
 # LOCAL DEBUG SETTINGS
@@ -237,7 +237,5 @@ CORS_ALLOW_ALL_ORIGINS = env("CORS_ALLOW_ALL_ORIGINS").strip().lower() in ("true
 
 if ENVIRONMENT == "local":
     print("Running in LOCAL mode")
-    EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-    SECURE_SSL_REDIRECT = env("SECURE_SSL_REDIRECT")
 else:
     print("Running in PRODUCTION mode")
