@@ -59,8 +59,6 @@ INSTALLED_APPS = [
     'captcha',
     'django_bootstrap5',
     'phonenumber_field',
-    'cloudinary',
-    'cloudinary_storage',
 
     # Django core apps
     'django.contrib.admin',
@@ -69,6 +67,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    'cloudinary',
+    'cloudinary_storage',
 ]
 
 MIDDLEWARE = [
