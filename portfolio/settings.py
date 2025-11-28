@@ -1,38 +1,36 @@
 """
 Django settings for portfolio project.
-Supports both local development and production environments.
+Unified for both local and production environments.
 """
 
 import os
-from pathlib import Path
 import environ
-import dj_database_url
+from pathlib import Path
 from django.contrib import messages
+from django.contrib.messages import constants as message_constants
+import dj_database_url
 
 # ------------------------------------------------------------------------------
-# BASE DIRECTORIES
+# ENVIRONMENT CONFIGURATION
 # ------------------------------------------------------------------------------
 
-BASE_DIR = Path(__file__).resolve().parent.parent
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+BASE_DIR_TEMPLATES = Path(__file__).resolve().parent.parent
 
-# ------------------------------------------------------------------------------
-# ENVIRONMENT VARIABLES
-# ------------------------------------------------------------------------------
-
-# Initialize environment manager
+# Initialize environment variables
 env = environ.Env(
     DEBUG=(bool, False),
     ENVIRONMENT=(str, "production"),  # "local" or "production"
 )
 
-# Load .env if it exists (useful for local development)
-env_path = BASE_DIR / ".env"
-if env_path.exists():
+env_path = os.path.join(BASE_DIR, ".env")
+
+# Load .env only if it exists (for local development)
+if os.path.exists(env_path):
     environ.Env.read_env(env_path)
 
-# Core environment variables
-DEBUG = env("DEBUG")
 ENVIRONMENT = env("ENVIRONMENT")
+DEBUG = env("DEBUG")
 
 # ------------------------------------------------------------------------------
 # SECURITY
@@ -40,7 +38,7 @@ ENVIRONMENT = env("ENVIRONMENT")
 
 SECRET_KEY = env("SECRET_KEY")
 ALLOWED_HOSTS = env.list("ALLOWED_HOSTS", default=["*"])
-SECURE_SSL_REDIRECT = env.bool("SECURE_SSL_REDIRECT", default=(ENVIRONMENT == "production"))
+SECURE_SSL_REDIRECT = env.bool("SECURE_SSL_REDIRECT", default=True)
 CSRF_TRUSTED_ORIGINS = env.list("CSRF_TRUSTED_ORIGINS", default=[])
 
 # ------------------------------------------------------------------------------
@@ -48,165 +46,202 @@ CSRF_TRUSTED_ORIGINS = env.list("CSRF_TRUSTED_ORIGINS", default=[])
 # ------------------------------------------------------------------------------
 
 INSTALLED_APPS = [
-    # Local app(s)
-    "home",
+    # Local apps
+    'home',
 
     # Third-party apps
-    "tinymce",
-    "rest_framework",
-    "watson",
-    "corsheaders",
-    "crispy_forms",
-    "crispy_bootstrap5",
-    "captcha",
-    "django_bootstrap5",
-    "phonenumber_field",
-    "cloudinary",
-    "cloudinary_storage",
+    'tinymce',
+    'rest_framework',
+    'watson',
+    'corsheaders',
+    'crispy_forms',
+    'crispy_bootstrap5',
+    'captcha',
+    'django_bootstrap5',
+    'phonenumber_field',
+    'cloudinary',
+    'cloudinary_storage',
 
     # Django core apps
-    "django.contrib.admin",
-    "django.contrib.auth",
-    "django.contrib.contenttypes",
-    "django.contrib.sessions",
-    "django.contrib.messages",
-    "django.contrib.staticfiles",
+    'django.contrib.admin',
+    'django.contrib.auth',
+    'django.contrib.contenttypes',
+    'django.contrib.sessions',
+    'django.contrib.messages',
+    'django.contrib.staticfiles',
 ]
 
 MIDDLEWARE = [
-    "django.middleware.security.SecurityMiddleware",
-    "corsheaders.middleware.CorsMiddleware",
-    "whitenoise.middleware.WhiteNoiseMiddleware",
-    "django.contrib.sessions.middleware.SessionMiddleware",
-    "django.middleware.common.CommonMiddleware",
-    "django.middleware.csrf.CsrfViewMiddleware",
-    "django.contrib.auth.middleware.AuthenticationMiddleware",
-    "django.contrib.messages.middleware.MessageMiddleware",
-    "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    'django.middleware.security.SecurityMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
+    'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.common.CommonMiddleware',
+    'django.middleware.csrf.CsrfViewMiddleware',
+    'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'django.contrib.messages.middleware.MessageMiddleware',
+    'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = "portfolio.urls"
-
-# ------------------------------------------------------------------------------
-# TEMPLATES
-# ------------------------------------------------------------------------------
+ROOT_URLCONF = 'portfolio.urls'
 
 TEMPLATES = [
     {
-        "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [BASE_DIR / "templates"],
-        "APP_DIRS": True,
-        "OPTIONS": {
-            "context_processors": [
-                "django.template.context_processors.debug",
-                "django.template.context_processors.request",
-                "django.contrib.auth.context_processors.auth",
-                "django.contrib.messages.context_processors.messages",
-                "portfolio.context_processors.project_context",
-                "django.template.context_processors.media",
+        'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        'DIRS': [BASE_DIR_TEMPLATES / 'templates'],
+        'APP_DIRS': True,
+        'OPTIONS': {
+            'context_processors': [
+                'django.template.context_processors.debug',
+                'django.template.context_processors.request',
+                'django.contrib.auth.context_processors.auth',
+                'django.contrib.messages.context_processors.messages',
+                'portfolio.context_processors.project_context',
+                'django.template.context_processors.media',
             ],
         },
     },
 ]
 
-WSGI_APPLICATION = "portfolio.wsgi.application"
+WSGI_APPLICATION = 'portfolio.wsgi.application'
 
 # ------------------------------------------------------------------------------
 # DATABASE
 # ------------------------------------------------------------------------------
 
-DATABASES = {
-    "default": dj_database_url.parse(env("DATABASE_URL"))
-}
+DATABASE_URL = env("DATABASE_URL")
+DATABASES = {"default": dj_database_url.parse(DATABASE_URL)}
 
 # ------------------------------------------------------------------------------
 # PASSWORD VALIDATION
 # ------------------------------------------------------------------------------
 
 AUTH_PASSWORD_VALIDATORS = [
-    {"NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator"},
-    {"NAME": "django.contrib.auth.password_validation.MinimumLengthValidator"},
-    {"NAME": "django.contrib.auth.password_validation.CommonPasswordValidator"},
-    {"NAME": "django.contrib.auth.password_validation.NumericPasswordValidator"},
+    {'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator'},
+    {'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator'},
+    {'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator'},
+    {'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator'},
 ]
 
 # ------------------------------------------------------------------------------
 # INTERNATIONALIZATION
 # ------------------------------------------------------------------------------
 
-LANGUAGE_CODE = "en-us"
-TIME_ZONE = "UTC"
+LANGUAGE_CODE = 'en-us'
+TIME_ZONE = 'UTC'
 USE_I18N = True
 USE_TZ = True
 
 # ------------------------------------------------------------------------------
-# STATIC FILES
+# STATIC / MEDIA / CLOUDINARY
 # ------------------------------------------------------------------------------
 
-STATIC_URL = "/static/"
-STATIC_ROOT = BASE_DIR / "staticfiles"
-STATICFILES_DIRS = [BASE_DIR / "static"]
-STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
-
-# ------------------------------------------------------------------------------
-# MEDIA (via Cloudinary)
-# ------------------------------------------------------------------------------
-
-CLOUDINARY_STORAGE = {
-    "CLOUD_NAME": env("CLOUDINARY_CLOUD_NAME"),
-    "API_KEY": env("CLOUDINARY_API_KEY"),
-    "API_SECRET": env("CLOUDINARY_API_SECRET"),
-}
-DEFAULT_FILE_STORAGE = "cloudinary_storage.storage.MediaCloudinaryStorage"
-
-# ------------------------------------------------------------------------------
-# EMAIL
-# ------------------------------------------------------------------------------
-
-EMAIL_BACKEND = env("EMAIL_BACKEND", default="django.core.mail.backends.smtp.EmailBackend")
-EMAIL_HOST = env("EMAIL_HOST", default="")
-EMAIL_PORT = env.int("EMAIL_PORT", default=587)
-EMAIL_HOST_USER = env("EMAIL_HOST_USER", default="")
-EMAIL_HOST_PASSWORD = env("EMAIL_HOST_PASSWORD", default="")
-EMAIL_USE_TLS = env.bool("EMAIL_USE_TLS", default=True)
-DEFAULT_FROM_EMAIL = env("DEFAULT_FROM_EMAIL", default="webmaster@localhost")
-
-# ------------------------------------------------------------------------------
-# MISC / INTEGRATIONS
-# ------------------------------------------------------------------------------
-
-# Message tags for Bootstrap
 MESSAGE_TAGS = {
-    messages.DEBUG: "alert-info",
-    messages.INFO: "alert-info",
-    messages.SUCCESS: "alert-success",
-    messages.WARNING: "alert-warning",
-    messages.ERROR: "alert-danger",
+    messages.DEBUG: 'alert-info',
+    messages.INFO: 'alert-info',
+    messages.SUCCESS: 'alert-success',
+    messages.WARNING: 'alert-warning',
+    messages.ERROR: 'alert-danger',
 }
 
-# Captcha
-RECAPTCHA_PUBLIC_KEY = env("RECAPTCHA_PUBLIC_KEY", default="")
-RECAPTCHA_PRIVATE_KEY = env("RECAPTCHA_PRIVATE_KEY", default="")
-RECAPTCHA_SECRET_KEY = env("RECAPTCHA_PRIVATE_KEY", default="")
+# Static files (served via WhiteNoise)
+STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
+STATIC_URL = '/static/'
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'static'),
+]
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
-# Crispy Forms
+# Cloudinary for media
+CLOUDINARY_STORAGE = {
+    'CLOUD_NAME': env('CLOUDINARY_CLOUD_NAME'),
+    'API_KEY': env('CLOUDINARY_API_KEY'),
+    'API_SECRET': env('CLOUDINARY_API_SECRET'),
+}
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+
+# ------------------------------------------------------------------------------
+# EMAIL CONFIGURATION
+# ------------------------------------------------------------------------------
+
+EMAIL_BACKEND = env('EMAIL_BACKEND')
+EMAIL_HOST = env("EMAIL_HOST")
+EMAIL_PORT = env("EMAIL_PORT")
+EMAIL_HOST_USER = env("EMAIL_HOST_USER")
+EMAIL_HOST_PASSWORD = env("EMAIL_HOST_PASSWORD")
+EMAIL_USE_TLS = env("EMAIL_USE_TLS")
+DEFAULT_FROM_EMAIL = env("DEFAULT_FROM_EMAIL")
+
+# ------------------------------------------------------------------------------
+# CAPTCHA CONFIG
+# ------------------------------------------------------------------------------
+
+RECAPTCHA_PUBLIC_KEY = env("RECAPTCHA_PUBLIC_KEY")
+RECAPTCHA_PRIVATE_KEY = env("RECAPTCHA_PRIVATE_KEY")
+RECAPTCHA_SECRET_KEY = env("RECAPTCHA_PRIVATE_KEY")
+
+# ------------------------------------------------------------------------------
+# ADMIN / MISC
+# ------------------------------------------------------------------------------
+
+ADMIN_EMAIL = env("ADMIN_EMAIL")
+ADMIN_NAME = env("ADMIN_NAME")
+
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# ------------------------------------------------------------------------------
+# TINYMCE CONFIG
+# ------------------------------------------------------------------------------
+
+TINYMCE_DEFAULT_CONFIG = {
+    'height': 500,
+    'width': '100%',
+    'menubar': True,
+    'plugins': (
+        'advlist autolink lists link image charmap print preview anchor '
+        'searchreplace visualblocks code fullscreen insertdatetime media table '
+        'paste code help wordcount autosave emoticons template'
+    ),
+    'toolbar': (
+        'undo redo | formatselect | fontsizeselect | fontselect | '
+        'bold italic underline strikethrough forecolor backcolor | '
+        'alignleft aligncenter alignright alignjustify | '
+        'bullist numlist outdent indent | link image media table | '
+        'charmap emoticons | code preview fullscreen | '
+        'template insertdatetime | removeformat help'
+    ),
+    'fontsize_formats': '8pt 10pt 12pt 14pt 18pt 24pt 36pt',
+    'font_formats': (
+        'Arial=arial,helvetica,sans-serif;'
+        'Courier New=courier new,courier,monospace;'
+        'Georgia=georgia,palatino;'
+        'Tahoma=tahoma,arial,helvetica,sans-serif;'
+        'Times New Roman=times new roman,times;'
+        'Verdana=verdana,geneva;'
+    ),
+    'autosave_ask_before_unload': True,
+    'autosave_interval': '30s',
+    'autosave_retention': '2m',
+    'image_advtab': True,
+    'content_style': 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }',
+}
+
+# ------------------------------------------------------------------------------
+# CRISPY / CORS
+# ------------------------------------------------------------------------------
+
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
-CRISPY_TEMPLATE_PACK = "bootstrap5"
+CRISPY_TEMPLATE_PACK = 'bootstrap5'
 
-# CORS
 CORS_ALLOWED_ORIGINS = env.list("CORS_ALLOWED_ORIGINS", default=[])
+
 CORS_ALLOW_ALL_ORIGINS = env.bool("CORS_ALLOW_ALL_ORIGINS", default=False)
 
 # ------------------------------------------------------------------------------
-# ADMIN / META
+# LOCAL DEBUG SETTINGS
 # ------------------------------------------------------------------------------
 
-ADMIN_EMAIL = env("ADMIN_EMAIL", default="")
-ADMIN_NAME = env("ADMIN_NAME", default="")
-DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
-
-# ------------------------------------------------------------------------------
-# ENVIRONMENT MODE PRINT (optional)
-# ------------------------------------------------------------------------------
-
-print(f"Running in {ENVIRONMENT.upper()} mode (DEBUG={DEBUG})")
+if ENVIRONMENT == "local":
+    print("Running in LOCAL mode")
+else:
+    print("Running in PRODUCTION mode")
