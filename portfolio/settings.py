@@ -48,7 +48,7 @@ CSRF_TRUSTED_ORIGINS = env.list(
     default=[
         "http://localhost",
         "http://127.0.0.1"
-    ] if ENVIRONMENT == "local" else []
+    ] if ENVIRONMENT == "local" else env.list("CSRF_TRUSTED_ORIGINS", default=[])
 )
 
 # In production, HTTPS redirect ON; in local, OFF automatically
