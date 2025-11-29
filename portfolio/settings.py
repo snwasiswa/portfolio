@@ -39,7 +39,7 @@ DEBUG = env("DEBUG")
 SECRET_KEY = env("SECRET_KEY")
 ALLOWED_HOSTS = env.list("ALLOWED_HOSTS", default=["*"])
 SECURE_SSL_REDIRECT = env.bool("SECURE_SSL_REDIRECT", default=True)
-CSRF_TRUSTED_ORIGINS = env.list("CSRF_TRUSTED_ORIGINS", default=[])
+
 
 # ------------------------------------------------------------------------------
 # APPLICATIONS
@@ -59,6 +59,8 @@ INSTALLED_APPS = [
     'captcha',
     'django_bootstrap5',
     'phonenumber_field',
+    'cloudinary',
+    'cloudinary_storage',
 
     # Django core apps
     'django.contrib.admin',
@@ -67,9 +69,6 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-
-    'cloudinary',
-    'cloudinary_storage',
 ]
 
 MIDDLEWARE = [
@@ -236,7 +235,6 @@ CRISPY_TEMPLATE_PACK = 'bootstrap5'
 
 CORS_ALLOWED_ORIGINS = env.list("CORS_ALLOWED_ORIGINS", default=[])
 
-CORS_ALLOW_ALL_ORIGINS = env.bool("CORS_ALLOW_ALL_ORIGINS", default=False)
 
 # ------------------------------------------------------------------------------
 # LOCAL DEBUG SETTINGS
