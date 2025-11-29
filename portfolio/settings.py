@@ -1,55 +1,67 @@
 """
-Django settings for portfolio project.
-Unified for both local and production environments.
+Unified Django settings for local + production.
 """
 
 import os
 import environ
 from pathlib import Path
 from django.contrib import messages
-from django.contrib.messages import constants as message_constants
 import dj_database_url
 
-# ------------------------------------------------------------------------------
-# ENVIRONMENT CONFIGURATION
-# ------------------------------------------------------------------------------
+# --------------------------------------------------------------------
+# BASE DIR
+# --------------------------------------------------------------------
 
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-BASE_DIR_TEMPLATES = Path(__file__).resolve().parent.parent
+BASE_DIR = Path(__file__).resolve().parent.parent
+BASE_DIR_TEMPLATES = BASE_DIR
 
-# Initialize environment variables
+# --------------------------------------------------------------------
+# ENVIRONMENT
+# --------------------------------------------------------------------
+
 env = environ.Env(
     DEBUG=(bool, False),
-    ENVIRONMENT=(str, "production"),  # "local" or "production"
+    ENVIRONMENT=(str, "production")  # "local" or "production"
 )
 
-env_path = os.path.join(BASE_DIR, ".env")
-
-# Load .env only if it exists (for local development)
-if os.path.exists(env_path):
+env_path = BASE_DIR / ".env"
+if env_path.exists():
     environ.Env.read_env(env_path)
 
 ENVIRONMENT = env("ENVIRONMENT")
 DEBUG = env("DEBUG")
 
-# ------------------------------------------------------------------------------
+# --------------------------------------------------------------------
 # SECURITY
-# ------------------------------------------------------------------------------
+# --------------------------------------------------------------------
 
 SECRET_KEY = env("SECRET_KEY")
-ALLOWED_HOSTS = env.list("ALLOWED_HOSTS", default=["*"])
-SECURE_SSL_REDIRECT = env.bool("SECURE_SSL_REDIRECT", default=True)
-CSRF_TRUSTED_ORIGINS = env.list("CSRF_TRUSTED_ORIGINS", default=[])
 
-# ------------------------------------------------------------------------------
+# Allow all locally, strict in production
+ALLOWED_HOSTS = (
+    ["*"] if ENVIRONMENT == "local"
+    else env.list("ALLOWED_HOSTS", default=["localhost"])
+)
+
+CSRF_TRUSTED_ORIGINS = env.list(
+    "CSRF_TRUSTED_ORIGINS",
+    default=[
+        "http://localhost",
+        "http://127.0.0.1"
+    ] if ENVIRONMENT == "local" else []
+)
+
+# In production, HTTPS redirect ON; in local, OFF automatically
+SECURE_SSL_REDIRECT = (ENVIRONMENT == "production")
+
+# --------------------------------------------------------------------
 # APPLICATIONS
-# ------------------------------------------------------------------------------
+# --------------------------------------------------------------------
 
 INSTALLED_APPS = [
-    # Local apps
     'home',
 
-    # Third-party apps
+    # 3rd party
     'tinymce',
     'rest_framework',
     'watson',
@@ -62,7 +74,7 @@ INSTALLED_APPS = [
     'cloudinary',
     'cloudinary_storage',
 
-    # Django core apps
+    # Django apps
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -73,8 +85,10 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    'corsheaders.middleware.CorsMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
+
+    'corsheaders.middleware.CorsMiddleware',
+
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -88,7 +102,7 @@ ROOT_URLCONF = 'portfolio.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR_TEMPLATES / 'templates'],
+        'DIRS': [BASE_DIR_TEMPLATES / "templates"],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -105,16 +119,16 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'portfolio.wsgi.application'
 
-# ------------------------------------------------------------------------------
+# --------------------------------------------------------------------
 # DATABASE
-# ------------------------------------------------------------------------------
+# --------------------------------------------------------------------
 
 DATABASE_URL = env("DATABASE_URL")
 DATABASES = {"default": dj_database_url.parse(DATABASE_URL)}
 
-# ------------------------------------------------------------------------------
+# --------------------------------------------------------------------
 # PASSWORD VALIDATION
-# ------------------------------------------------------------------------------
+# --------------------------------------------------------------------
 
 AUTH_PASSWORD_VALIDATORS = [
     {'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator'},
@@ -123,48 +137,38 @@ AUTH_PASSWORD_VALIDATORS = [
     {'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator'},
 ]
 
-# ------------------------------------------------------------------------------
+# --------------------------------------------------------------------
 # INTERNATIONALIZATION
-# ------------------------------------------------------------------------------
+# --------------------------------------------------------------------
 
 LANGUAGE_CODE = 'en-us'
 TIME_ZONE = 'UTC'
 USE_I18N = True
 USE_TZ = True
 
-# ------------------------------------------------------------------------------
+# --------------------------------------------------------------------
 # STATIC / MEDIA / CLOUDINARY
-# ------------------------------------------------------------------------------
+# --------------------------------------------------------------------
 
-MESSAGE_TAGS = {
-    messages.DEBUG: 'alert-info',
-    messages.INFO: 'alert-info',
-    messages.SUCCESS: 'alert-success',
-    messages.WARNING: 'alert-warning',
-    messages.ERROR: 'alert-danger',
-}
+STATIC_URL = "/static/"
+STATIC_ROOT = BASE_DIR / "staticfiles"
+STATICFILES_DIRS = [BASE_DIR / "static"]
 
-# Static files (served via WhiteNoise)
-STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
-STATIC_URL = '/static/'
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'static'),
-]
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
-# Cloudinary for media
+# Cloudinary
 CLOUDINARY_STORAGE = {
-    'CLOUD_NAME': env('CLOUDINARY_CLOUD_NAME'),
-    'API_KEY': env('CLOUDINARY_API_KEY'),
-    'API_SECRET': env('CLOUDINARY_API_SECRET'),
+    'CLOUD_NAME': env("CLOUDINARY_CLOUD_NAME"),
+    'API_KEY': env("CLOUDINARY_API_KEY"),
+    'API_SECRET': env("CLOUDINARY_API_SECRET"),
 }
 DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
-# ------------------------------------------------------------------------------
-# EMAIL CONFIGURATION
-# ------------------------------------------------------------------------------
+# --------------------------------------------------------------------
+# EMAIL
+# --------------------------------------------------------------------
 
-EMAIL_BACKEND = env('EMAIL_BACKEND')
+EMAIL_BACKEND = env("EMAIL_BACKEND")
 EMAIL_HOST = env("EMAIL_HOST")
 EMAIL_PORT = env("EMAIL_PORT")
 EMAIL_HOST_USER = env("EMAIL_HOST_USER")
@@ -172,26 +176,26 @@ EMAIL_HOST_PASSWORD = env("EMAIL_HOST_PASSWORD")
 EMAIL_USE_TLS = env("EMAIL_USE_TLS")
 DEFAULT_FROM_EMAIL = env("DEFAULT_FROM_EMAIL")
 
-# ------------------------------------------------------------------------------
-# CAPTCHA CONFIG
-# ------------------------------------------------------------------------------
+# --------------------------------------------------------------------
+# CAPTCHA
+# --------------------------------------------------------------------
 
 RECAPTCHA_PUBLIC_KEY = env("RECAPTCHA_PUBLIC_KEY")
 RECAPTCHA_PRIVATE_KEY = env("RECAPTCHA_PRIVATE_KEY")
 RECAPTCHA_SECRET_KEY = env("RECAPTCHA_PRIVATE_KEY")
 
-# ------------------------------------------------------------------------------
-# ADMIN / MISC
-# ------------------------------------------------------------------------------
+# --------------------------------------------------------------------
+# ADMIN
+# --------------------------------------------------------------------
 
 ADMIN_EMAIL = env("ADMIN_EMAIL")
 ADMIN_NAME = env("ADMIN_NAME")
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-# ------------------------------------------------------------------------------
-# TINYMCE CONFIG
-# ------------------------------------------------------------------------------
+# --------------------------------------------------------------------
+# TINYMCE
+# --------------------------------------------------------------------
 
 TINYMCE_DEFAULT_CONFIG = {
     'height': 500,
@@ -226,30 +230,22 @@ TINYMCE_DEFAULT_CONFIG = {
     'content_style': 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }',
 }
 
-# ------------------------------------------------------------------------------
+# --------------------------------------------------------------------
 # CRISPY / CORS
-# ------------------------------------------------------------------------------
+# --------------------------------------------------------------------
 
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
-CRISPY_TEMPLATE_PACK = 'bootstrap5'
+CRISPY_TEMPLATE_PACK = "bootstrap5"
 
-CORS_ALLOWED_ORIGINS = env.list("CORS_ALLOWED_ORIGINS", default=[])
-
-CORS_ALLOW_ALL_ORIGINS = env.bool("CORS_ALLOW_ALL_ORIGINS", default=False)
-
-# ------------------------------------------------------------------------------
-# LOCAL DEBUG SETTINGS
-# ------------------------------------------------------------------------------
-
+# LOCAL mode → allow all origins to avoid CSS/CORS issues
 if ENVIRONMENT == "local":
-    print("Running in LOCAL mode")
-else:
-    print("Running in PRODUCTION mode")
-
-
-if DEBUG:
     CORS_ALLOW_ALL_ORIGINS = True
 else:
-    # Production safe values
-    CORS_ALLOWED_ORIGINS = env.list("CORS_ALLOWED_ORIGINS", default=[])
     CORS_ALLOW_ALL_ORIGINS = env.bool("CORS_ALLOW_ALL_ORIGINS", default=False)
+    CORS_ALLOWED_ORIGINS = env.list("CORS_ALLOWED_ORIGINS", default=[])
+
+# --------------------------------------------------------------------
+# MODE ANNOUNCEMENT
+# --------------------------------------------------------------------
+
+print(f"Running in {ENVIRONMENT.upper()} mode")
